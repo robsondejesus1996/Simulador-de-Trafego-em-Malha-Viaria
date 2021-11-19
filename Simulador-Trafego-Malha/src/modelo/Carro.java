@@ -5,7 +5,7 @@
  */
 package modelo;
 
-import controle.Controller;
+import controle.SystemController;
 import java.awt.Image;
 import java.util.Random;
 import java.util.logging.Level;
@@ -32,47 +32,83 @@ public class Carro extends Thread implements ICarro {
 
     @Override
     public void desativar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void enterSimulation(ICasa casaAleatoria) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.ativo = false;
+        SystemController.getInstance().getMalhaController().removeCarro(this.getId());
     }
 
     @Override
     public int getRBG() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return rgb;
     }
 
     @Override
     public void obterRota() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void mover() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        rota = this.casa.getRota();
     }
 
     @Override
     public void setCasa(ICasa newCasa) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.casa = newCasa;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Carro other = (Carro) obj;
+        return this.getId() == other.getId();
     }
 
     @Override
     public ICasa getCasa() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void sleep(int nextInt) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return casa;
     }
 
     @Override
     public int getVelocidade() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return velocidade;
+    }
+
+    @Override
+    public void sleep(int tempo) {
+        try {
+            Thread.sleep(tempo);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Carro.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public void enterSimulation(ICasa casaAleatoria) {
+        rota = new EntraNaMalha(this, casaAleatoria);
+        start();
+    }
+
+    @Override
+    public void mover() {
+        rota.executar();
+        rota = null;
+    }
+
+    @Override
+    public void run() {
+        mover();
+        sleep(velocidade);
+        while (ativo) {
+            obterRota();
+            if (rota == null) {
+                break;
+            }
+            mover();
+            sleep(velocidade);
+        }
     }
 
 }

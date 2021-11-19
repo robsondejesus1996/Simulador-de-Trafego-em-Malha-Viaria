@@ -14,11 +14,11 @@ import java.util.logging.Logger;
  *
  * @author Robson de Jesus
  */
-public class Semaforo extends Casa {
+public class CasaSemaforo extends Casa {
 
     private Semaphore mutex;
 
-    public Semaforo(int valor, int colunm, int row) {
+    public CasaSemaforo(int valor, int colunm, int row) {
         super(valor, colunm, row);
         mutex = new Semaphore(1, true);
     }
@@ -34,7 +34,7 @@ public class Semaforo extends Casa {
             carro.setCasa(this);
             setCarro(carro);
         } catch (InterruptedException ex) {
-            Logger.getLogger(Semaforo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CasaSemaforo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -48,7 +48,7 @@ public class Semaforo extends Casa {
         try {
             return mutex.tryAcquire(15, TimeUnit.MILLISECONDS);
         } catch (InterruptedException ex) {
-            Logger.getLogger(Semaforo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CasaSemaforo.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }

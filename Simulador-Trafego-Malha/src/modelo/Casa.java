@@ -75,7 +75,7 @@ public abstract class Casa implements ICasa {
     @Override
     public void setCarro(ICarro carro) {
         if (carro != null)
-            //SystemController.getInstance().getMalhaController().moveCarro(carro.getId(), colunm, row);
+            SystemController.getInstance().getMalhaController().moveCarro(carro.getId(), colunm, row);
         this.carro = carro;
     }
 

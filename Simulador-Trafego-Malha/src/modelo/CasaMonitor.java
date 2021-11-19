@@ -15,11 +15,11 @@ import java.util.logging.Logger;
  *
  * @author Robson de Jesus
  */
-public class Monitor extends Casa {
+public class CasaMonitor extends Casa {
 
     private Lock lock;
 
-    public Monitor(int valor, int colunm, int row) {
+    public CasaMonitor(int valor, int colunm, int row) {
         super(valor, colunm, row);
         this.lock = new ReentrantLock(true);
     }
@@ -46,7 +46,7 @@ public class Monitor extends Casa {
         try {
             return lock.tryLock(15, TimeUnit.MILLISECONDS);
         } catch (InterruptedException ex) {
-            Logger.getLogger(Monitor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CasaMonitor.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }
