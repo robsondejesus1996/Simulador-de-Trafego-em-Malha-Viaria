@@ -5,6 +5,7 @@
  */
 package controle;
 
+import abstractfactory.AbstractFactory;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,6 +14,8 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
+import modelo.Carro;
+import modelo.ICarro;
 
 /**
  *
