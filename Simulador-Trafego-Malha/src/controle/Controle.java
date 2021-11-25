@@ -3,9 +3,8 @@ package controle;
 import factoryAbs.MonitorFabrica;
 import factoryAbs.SemaforoFabrica;
 import modelo.Carro;
-import utilizacao.LerArquivoMatrix;
+import utilizacao.LeituraMalha;
 import tela.FramePrincipalObserver;
-import tela.TableObserver;
 
 import javax.swing.*;
 import java.io.FileNotFoundException;
@@ -17,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.InterfaceCarro;
 import factoryAbs.FabricaAbstrata;
+import tela.ObservadorTabela;
 
 /**
  *
@@ -32,7 +32,7 @@ public class Controle {
     private Map<Long, InterfaceCarro> carrosEmEspera;
     private Map<Long, InterfaceCarro> carrosEmMalha;
     private List<FramePrincipalObserver> framePrincipalObservers;
-    private List<TableObserver> malhaTablesObservers;
+    private List<ObservadorTabela> malhaTablesObservers;
 
     private Controle() {
         this.carrosEmMalha = new HashMap<>();
@@ -54,7 +54,7 @@ public class Controle {
      * Ler Arquivo onde contem a matriz
      */
     public void readFile(String text) throws FileNotFoundException, Exception {
-        LerArquivoMatrix ler = new LerArquivoMatrix(text);
+        LeituraMalha ler = new LeituraMalha(text);
         malhaController = new ControleArquivoMalha(ler.getMatrix());
     }
 
@@ -117,7 +117,7 @@ public class Controle {
         this.framePrincipalObservers.add(observer);
     }
 
-    public void addMalhaTableObserver(TableObserver observer) {
+    public void addMalhaTableObserver(ObservadorTabela observer) {
         this.malhaTablesObservers.add(observer);
     }
 

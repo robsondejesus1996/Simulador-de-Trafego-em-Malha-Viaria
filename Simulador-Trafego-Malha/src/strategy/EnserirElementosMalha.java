@@ -9,12 +9,12 @@ import modelo.InterfaceCasa;
  *
  * @author Robson de Jesus
  */
-public class EntraNaMalha implements Movimentacao {
+public class EnserirElementosMalha implements Movimentacao {
 
     private InterfaceCasa casa;
     private InterfaceCarro carro;
 
-    public EntraNaMalha(Carro carro, InterfaceCasa casa) {
+    public EnserirElementosMalha(Carro carro, InterfaceCasa casa) {
         this.casa = casa;
         this.carro = carro;
     }

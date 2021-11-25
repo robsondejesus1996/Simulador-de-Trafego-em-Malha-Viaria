@@ -1,8 +1,8 @@
 package modelo;
 
 import controle.Controle;
-import strategy.EntraNaMalha;
-import utilizacao.Image;
+import strategy.EnserirElementosMalha;
+import utilizacao.MapaImagens;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,7 +24,7 @@ public class Carro extends Thread implements InterfaceCarro {
     public Carro() {
         this.ativo = true;
         this.velocidade = 200 + new Random().nextInt(300);
-        this.rgb = Image.gerarCorAleatoriamente().getRGB();
+        this.rgb = MapaImagens.gerarCorAleatoriamente().getRGB();
     }
 
     @Override
@@ -84,7 +84,7 @@ public class Carro extends Thread implements InterfaceCarro {
 
     @Override
     public void enterSimulation(InterfaceCasa casaAleatoria) {
-        rota = new EntraNaMalha(this, casaAleatoria);
+        rota = new EnserirElementosMalha(this, casaAleatoria);
         start();
     }
 

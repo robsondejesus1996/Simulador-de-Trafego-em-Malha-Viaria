@@ -6,12 +6,12 @@ import modelo.InterfaceCasa;
  *
  * @author Robson de Jesus
  */
-public class MoverUmaCasa implements Movimentacao {
+public class MovimentacaoUmaCasa implements Movimentacao {
 
     private InterfaceCasa origem;
     private InterfaceCasa destino;
 
-    public MoverUmaCasa(InterfaceCasa origem, InterfaceCasa destino) {
+    public MovimentacaoUmaCasa(InterfaceCasa origem, InterfaceCasa destino) {
         this.origem = origem;
         this.destino = destino;
     }

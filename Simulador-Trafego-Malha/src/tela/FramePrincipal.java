@@ -39,7 +39,7 @@ public class FramePrincipal extends JFrame implements FramePrincipalObserver {
     private JLabel lbNumCarrosSimulacao;
     private Controle controller;
     private GridBagConstraints cons;
-    private MalhaTable table;
+    private TabelaMalha table;
 
     public FramePrincipal() {
         controller = Controle.getInstance();
@@ -196,7 +196,7 @@ public class FramePrincipal extends JFrame implements FramePrincipalObserver {
         jpTable.removeAll();
         jsNumCarro.setModel(new SpinnerNumberModel(1, 1, controller.getMalhaController().getNumCasasValida(), 1));
         jpTable.setLayout(new BoxLayout(jpTable, BoxLayout.PAGE_AXIS));
-        table = new MalhaTable(jpTable);
+        table = new TabelaMalha(jpTable);
         JScrollPane pane = new JScrollPane();
         pane.setViewportView(table);
         pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);

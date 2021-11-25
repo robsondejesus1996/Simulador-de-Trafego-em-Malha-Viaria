@@ -10,11 +10,11 @@ import java.util.logging.Logger;
  *
  * @author Robson de Jesus
  */
-public class CasaMonitor extends Casa {
+public class MonitoresCasas extends Casa {
 
     private Lock lock;
 
-    public CasaMonitor(int valor, int colunm, int row) {
+    public MonitoresCasas(int valor, int colunm, int row) {
         super(valor, colunm, row);
         this.lock = new ReentrantLock(true);
     }
@@ -41,7 +41,7 @@ public class CasaMonitor extends Casa {
         try {
             return lock.tryLock(15, TimeUnit.MILLISECONDS);
         } catch (InterruptedException ex) {
-            Logger.getLogger(CasaMonitor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MonitoresCasas.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }

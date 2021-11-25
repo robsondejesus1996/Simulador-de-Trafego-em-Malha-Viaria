@@ -1,5 +1,5 @@
 package tela;
-import utilizacao.Image;
+import utilizacao.MapaImagens;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -16,7 +16,7 @@ public class CarroSprite {
     public CarroSprite(int color, int column, int row) {
         this.column = column;
         this.row = row;
-        this.image = Image.replaceColor(Image.getImagem(Image.CARRO), color);
+        this.image = MapaImagens.replaceColor(MapaImagens.getImagem(MapaImagens.CARRO), color);
     }
 
     public void setColumn(int column) {

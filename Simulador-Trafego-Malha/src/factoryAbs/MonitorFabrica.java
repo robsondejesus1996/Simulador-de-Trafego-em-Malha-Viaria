@@ -1,6 +1,6 @@
 package factoryAbs;
 
-import modelo.CasaMonitor;
+import modelo.MonitoresCasas;
 import modelo.InterfaceCasa;
 
 /**
@@ -13,7 +13,7 @@ public class MonitorFabrica implements FabricaAbstrata{
     @Override
     public InterfaceCasa createCasa(int valor, int column, int row) {
 
-        return new CasaMonitor(valor,column,row);
+        return new MonitoresCasas(valor,column,row);
     }
 
 }

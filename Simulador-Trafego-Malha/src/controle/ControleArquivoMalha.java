@@ -1,16 +1,16 @@
 package controle;
 
-import strategy.MoverNCasa;
-import strategy.MatarCarro;
-import strategy.MoverUmaCasa;
+import strategy.MovimentacaoCasa;
+import strategy.DesativarCarro;
+import strategy.MovimentacaoUmaCasa;
 import modelo.Casa;
-import tela.TableObserver;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import modelo.InterfaceCasa;
 import factoryAbs.FabricaAbstrata;
+import tela.ObservadorTabela;
 /**
  *
  * @author Robson de Jesus
@@ -24,7 +24,7 @@ public class ControleArquivoMalha {
     private List<InterfaceCasa> casasRespawn;
     private List<InterfaceCasa> casasDeath;
 
-    private List<TableObserver> observers;
+    private List<ObservadorTabela> observers;
 
     private final Random random;
 
@@ -44,7 +44,7 @@ public class ControleArquivoMalha {
         setCommands();
     }
 
-    public void anexar(TableObserver observer) {
+    public void anexar(ObservadorTabela observer) {
         this.observers.add(observer);
     }
 
@@ -154,7 +154,7 @@ public class ControleArquivoMalha {
         //Adicionar os commands dentro da casa
         //Add Pontos de Morte
         for (InterfaceCasa iCasa : casasDeath) {
-            iCasa.addRota(new MatarCarro(iCasa));
+            iCasa.addRota(new DesativarCarro(iCasa));
         }
         //Agora percorre a estrutura para encontrar as possíveis rotas de cada casa
         for (int linha = 0; linha < getRow(); linha++) {
@@ -170,7 +170,7 @@ public class ControleArquivoMalha {
                                 if (isCruzamento(destino)) {
                                     construirCaminhoCruzamenteo(origem);
                                 } else {
-                                    origem.addRota(new MoverUmaCasa(origem, destino));
+                                    origem.addRota(new MovimentacaoUmaCasa(origem, destino));
                                 }
                             }
                             case 2 -> {
@@ -178,7 +178,7 @@ public class ControleArquivoMalha {
                                 if (isCruzamento(destino)) {
                                     construirCaminhoCruzamenteo(origem);
                                 } else {
-                                    origem.addRota(new MoverUmaCasa(origem, destino));
+                                    origem.addRota(new MovimentacaoUmaCasa(origem, destino));
                                 }
                             }
                             case 3 -> {
@@ -186,7 +186,7 @@ public class ControleArquivoMalha {
                                 if (isCruzamento(destino)) {
                                     construirCaminhoCruzamenteo(origem);
                                 } else {
-                                    origem.addRota(new MoverUmaCasa(origem, destino));
+                                    origem.addRota(new MovimentacaoUmaCasa(origem, destino));
                                 }
                             }
                             case 4 -> {
@@ -194,10 +194,10 @@ public class ControleArquivoMalha {
                                 if (isCruzamento(destino)) {
                                     construirCaminhoCruzamenteo(origem);
                                 } else {
-                                    origem.addRota(new MoverUmaCasa(origem, destino));
+                                    origem.addRota(new MovimentacaoUmaCasa(origem, destino));
                                 }
                             }
-                            default -> origem.addRota(new MatarCarro(origem));
+                            default -> origem.addRota(new DesativarCarro(origem));
                         }
                     }
                 }
@@ -260,15 +260,15 @@ public class ControleArquivoMalha {
                 Movimento3 = matrixCasa[origem.getColunm() - 1][origem.getRow() - 2];
                 saida1 = matrixCasa[origem.getColunm() + 1][origem.getRow() - 1];
                 if (isValidHouse(saida1)) {
-                    origem.addRota(new MoverNCasa(origem, saida1, Arrays.asList(Movimento1, saida1)));
+                    origem.addRota(new MovimentacaoCasa(origem, saida1, Arrays.asList(Movimento1, saida1)));
                 }
                 saida2 = matrixCasa[origem.getColunm()][origem.getRow() - 3];
                 if (isValidHouse(saida2)) {
-                    origem.addRota(new MoverNCasa(origem, saida2, Arrays.asList(Movimento1, Movimento2, saida2)));
+                    origem.addRota(new MovimentacaoCasa(origem, saida2, Arrays.asList(Movimento1, Movimento2, saida2)));
                 }
                 saida3 = matrixCasa[origem.getColunm() - 2][origem.getRow() - 2];
                 if (isValidHouse(saida3)) {
-                    origem.addRota(new MoverNCasa(origem, saida3, Arrays.asList(Movimento1, Movimento2, Movimento3, saida3)));
+                    origem.addRota(new MovimentacaoCasa(origem, saida3, Arrays.asList(Movimento1, Movimento2, Movimento3, saida3)));
                 }
             }
             case 2 -> {
@@ -277,15 +277,15 @@ public class ControleArquivoMalha {
                 Movimento3 = matrixCasa[origem.getColunm() + 2][origem.getRow() - 1];
                 saida1 = matrixCasa[origem.getColunm() + 1][origem.getRow() + 1];
                 if (isValidHouse(saida1)) {
-                    origem.addRota(new MoverNCasa(origem, saida1, Arrays.asList(Movimento1, saida1)));
+                    origem.addRota(new MovimentacaoCasa(origem, saida1, Arrays.asList(Movimento1, saida1)));
                 }
                 saida2 = matrixCasa[origem.getColunm() + 3][origem.getRow()];
                 if (isValidHouse(saida2)) {
-                    origem.addRota(new MoverNCasa(origem, saida2, Arrays.asList(Movimento1, Movimento2, saida2)));
+                    origem.addRota(new MovimentacaoCasa(origem, saida2, Arrays.asList(Movimento1, Movimento2, saida2)));
                 }
                 saida3 = matrixCasa[origem.getColunm() + 2][origem.getRow() - 2];
                 if (isValidHouse(saida3)) {
-                    origem.addRota(new MoverNCasa(origem, saida3, Arrays.asList(Movimento1, Movimento2, Movimento3, saida3)));
+                    origem.addRota(new MovimentacaoCasa(origem, saida3, Arrays.asList(Movimento1, Movimento2, Movimento3, saida3)));
                 }
             }
             case 3 -> {
@@ -294,15 +294,15 @@ public class ControleArquivoMalha {
                 Movimento3 = matrixCasa[origem.getColunm() + 1][origem.getRow() + 2];
                 saida1 = matrixCasa[origem.getColunm() - 1][origem.getRow() + 1];
                 if (isValidHouse(saida1)) {
-                    origem.addRota(new MoverNCasa(origem, saida1, Arrays.asList(Movimento1, saida1)));
+                    origem.addRota(new MovimentacaoCasa(origem, saida1, Arrays.asList(Movimento1, saida1)));
                 }
                 saida2 = matrixCasa[origem.getColunm()][origem.getRow() + 3];
                 if (isValidHouse(saida2)) {
-                    origem.addRota(new MoverNCasa(origem, saida2, Arrays.asList(Movimento1, Movimento2, saida2)));
+                    origem.addRota(new MovimentacaoCasa(origem, saida2, Arrays.asList(Movimento1, Movimento2, saida2)));
                 }
                 saida3 = matrixCasa[origem.getColunm() + 2][origem.getRow() + 2];
                 if (isValidHouse(saida3)) {
-                    origem.addRota(new MoverNCasa(origem, saida3, Arrays.asList(Movimento1, Movimento2, Movimento3, saida3)));
+                    origem.addRota(new MovimentacaoCasa(origem, saida3, Arrays.asList(Movimento1, Movimento2, Movimento3, saida3)));
                 }
             }
             case 4 -> {
@@ -311,17 +311,18 @@ public class ControleArquivoMalha {
                 Movimento3 = matrixCasa[origem.getColunm() - 2][origem.getRow() + 1];
                 saida1 = matrixCasa[origem.getColunm() - 1][origem.getRow() - 1];
                 if (isValidHouse(saida1)) {
-                    origem.addRota(new MoverNCasa(origem, saida1, Arrays.asList(Movimento1, saida1)));
+                    origem.addRota(new MovimentacaoCasa(origem, saida1, Arrays.asList(Movimento1, saida1)));
                 }
                 saida2 = matrixCasa[origem.getColunm() - 3][origem.getRow()];
                 if (isValidHouse(saida2)) {
-                    origem.addRota(new MoverNCasa(origem, saida2, Arrays.asList(Movimento1, Movimento2, saida2)));
+                    origem.addRota(new MovimentacaoCasa(origem, saida2, Arrays.asList(Movimento1, Movimento2, saida2)));
                 }
                 saida3 = matrixCasa[origem.getColunm() - 2][origem.getRow() + 2];
                 if (isValidHouse(saida3)) {
-                    origem.addRota(new MoverNCasa(origem, saida3, Arrays.asList(Movimento1, Movimento2, Movimento3, saida3)));
+                    origem.addRota(new MovimentacaoCasa(origem, saida3, Arrays.asList(Movimento1, Movimento2, Movimento3, saida3)));
                 }
             }
+
         }
     }
 

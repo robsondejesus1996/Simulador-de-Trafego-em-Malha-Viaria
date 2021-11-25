@@ -10,7 +10,7 @@ import modelo.InterfaceCasa;
  *
  * @author Robson de Jesus
  */
-public class MoverNCasa implements Movimentacao {
+public class MovimentacaoCasa implements Movimentacao {
 
     //Começo de Tudo
     private final InterfaceCasa origem;
@@ -22,7 +22,7 @@ public class MoverNCasa implements Movimentacao {
     //random
     private final Random random;
 
-    public MoverNCasa(InterfaceCasa origem, InterfaceCasa destino, List<InterfaceCasa> caminho) {
+    public MovimentacaoCasa(InterfaceCasa origem, InterfaceCasa destino, List<InterfaceCasa> caminho) {
         this.origem = origem;
         this.destino = destino;
         this.caminho = Collections.unmodifiableList(caminho);

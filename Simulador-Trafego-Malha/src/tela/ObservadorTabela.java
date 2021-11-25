@@ -4,7 +4,7 @@ package tela;
  *
  * @author Robson de Jesus
  */
-public interface TableObserver {
+public interface ObservadorTabela {
 
     void createCarro(long id, int color, int column, int row);
 

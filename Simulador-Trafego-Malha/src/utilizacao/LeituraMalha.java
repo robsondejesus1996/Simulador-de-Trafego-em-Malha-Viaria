@@ -8,12 +8,12 @@ import java.util.Scanner;
  *
  * @author Robson de Jesus
  */
-public class LerArquivoMatrix {
+public class LeituraMalha {
 
     private int[][] matrix;
     private String caminho;
 
-    public LerArquivoMatrix(String caminho) throws FileNotFoundException, Exception {
+    public LeituraMalha(String caminho) throws FileNotFoundException, Exception {
         this.caminho = caminho;
         lerAquivo();
     }

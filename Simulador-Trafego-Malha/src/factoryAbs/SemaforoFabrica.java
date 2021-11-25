@@ -1,7 +1,7 @@
 package factoryAbs;
 
 import modelo.Casa;
-import modelo.CasaSemaforo;
+import modelo.SemaforosCasas;
 
 /**
  *
@@ -12,7 +12,7 @@ public class SemaforoFabrica implements FabricaAbstrata {
     @Override
     public Casa createCasa(int valor, int column, int row) {
 
-        return new CasaSemaforo(valor, column, row);
+        return new SemaforosCasas(valor, column, row);
     }
 
 }

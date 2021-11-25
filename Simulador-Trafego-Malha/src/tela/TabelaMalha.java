@@ -2,7 +2,7 @@ package tela;
 
 import controle.ControleArquivoMalha;
 import controle.Controle;
-import utilizacao.Image;
+import utilizacao.MapaImagens;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
@@ -18,7 +18,7 @@ import java.util.List;
  *
  * @author Robson de Jesus
  */
-public class MalhaTable extends JTable implements TableObserver {
+public class TabelaMalha extends JTable implements ObservadorTabela {
 
     private ControleArquivoMalha controller;
     private JPanel parentPanel;
@@ -26,7 +26,7 @@ public class MalhaTable extends JTable implements TableObserver {
     private BufferedImage[][] canvas;
     private Map<Long, CarroSprite> sprites;
 
-    public MalhaTable(JPanel parent) {
+    public TabelaMalha(JPanel parent) {
         this.controller = Controle.getInstance().getMalhaController();
         this.controller.anexar(this);
         Controle.getInstance().addMalhaTableObserver(this);
@@ -87,8 +87,8 @@ public class MalhaTable extends JTable implements TableObserver {
     private void initImages() {
         for (int column = 0; column < controller.getColumn(); column++) {
             for (int row = 0; row < controller.getRow(); row++) {
-                orginalMalhaImages[column][row] = Image.getImagem((int) controller.getCasaValue(column, row));
-                canvas[column][row] = Image.getImagem((int) controller.getCasaValue(column, row));
+                orginalMalhaImages[column][row] = MapaImagens.getImagem((int) controller.getCasaValue(column, row));
+                canvas[column][row] = MapaImagens.getImagem((int) controller.getCasaValue(column, row));
             }
         }
         this.repaint();

@@ -15,7 +15,7 @@ import javax.imageio.ImageIO;
  *
  * @author Robson de Jesus
  */
-public class Image {
+public class MapaImagens {
 
     private static Map<String, BufferedImage> imagems = new HashMap<>();
     //Geral
@@ -30,13 +30,13 @@ public class Image {
     private static Random random;
 
     private static void initGeral() throws IOException {
-        imagems.put(ZERO, ImageIO.read(new File(Image.ZERO)));
-        imagems.put(CIMA, ImageIO.read(new File(Image.CIMA)));
-        imagems.put(BAIXO, ImageIO.read(new File(Image.BAIXO)));
-        imagems.put(ESQUERDA, ImageIO.read(new File(Image.ESQUERDA)));
-        imagems.put(DIREITA, ImageIO.read(new File(Image.DIREITA)));
-        imagems.put(OUTROS, ImageIO.read(new File(Image.OUTROS)));
-        imagems.put(CARRO, ImageIO.read(new File(Image.CARRO)));
+        imagems.put(ZERO, ImageIO.read(new File(MapaImagens.ZERO)));
+        imagems.put(CIMA, ImageIO.read(new File(MapaImagens.CIMA)));
+        imagems.put(BAIXO, ImageIO.read(new File(MapaImagens.BAIXO)));
+        imagems.put(ESQUERDA, ImageIO.read(new File(MapaImagens.ESQUERDA)));
+        imagems.put(DIREITA, ImageIO.read(new File(MapaImagens.DIREITA)));
+        imagems.put(OUTROS, ImageIO.read(new File(MapaImagens.OUTROS)));
+        imagems.put(CARRO, ImageIO.read(new File(MapaImagens.CARRO)));
     }
 
     public static BufferedImage getImagem(int in) {
@@ -55,7 +55,7 @@ public class Image {
             try {
                 initGeral();
             } catch (IOException ex) {
-                Logger.getLogger(Image.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(MapaImagens.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return imagems.get(imagem);

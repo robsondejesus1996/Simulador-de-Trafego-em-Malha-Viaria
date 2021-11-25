@@ -8,11 +8,15 @@ import modelo.InterfaceCasa;
  *
  * @author Robson de Jesus
  */
-public class MatarCarro implements Movimentacao {
+public class DesativarCarro implements Movimentacao {
+    
+    /**
+     * Matar o carro 
+     */
 
     private final InterfaceCasa origem;
 
-    public MatarCarro(InterfaceCasa origem) {
+    public DesativarCarro(InterfaceCasa origem) {
         this.origem = origem;
     }
 

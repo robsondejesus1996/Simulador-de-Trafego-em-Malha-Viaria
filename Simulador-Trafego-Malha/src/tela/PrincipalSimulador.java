@@ -7,7 +7,7 @@ import java.awt.EventQueue;
  *
  * @author Robson de Jesus
  */
-public class SimuladorTransito {
+public class PrincipalSimulador {
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {

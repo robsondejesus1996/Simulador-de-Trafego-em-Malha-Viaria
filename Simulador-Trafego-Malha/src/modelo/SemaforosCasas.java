@@ -10,11 +10,11 @@ import strategy.Movimentacao;
  *
  * @author Robson de Jesus
  */
-public class CasaSemaforo extends Casa {
+public class SemaforosCasas extends Casa {
 
     private Semaphore mutex;
 
-    public CasaSemaforo(int valor, int colunm, int row) {
+    public SemaforosCasas(int valor, int colunm, int row) {
         super(valor, colunm, row);
         mutex = new Semaphore(1, true);
     }
@@ -30,7 +30,7 @@ public class CasaSemaforo extends Casa {
             carro.setCasa(this);
             setCarro(carro);
         } catch (InterruptedException ex) {
-            Logger.getLogger(CasaSemaforo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SemaforosCasas.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -44,7 +44,7 @@ public class CasaSemaforo extends Casa {
         try {
             return mutex.tryAcquire(15, TimeUnit.MILLISECONDS);
         } catch (InterruptedException ex) {
-            Logger.getLogger(CasaSemaforo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SemaforosCasas.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }
