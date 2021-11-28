@@ -30,7 +30,7 @@ public class Carro extends Thread implements InterfaceCarro {
     @Override
     public void desativar() {
         this.ativo = false;
-        Controle.getInstance().getMalhaController().removeCarro(this.getId());
+        Controle.getInstance().obterControleMalha().excluirCarroObservadores(this.getId());
     }
 
     @Override

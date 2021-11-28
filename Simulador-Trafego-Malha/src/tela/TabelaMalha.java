@@ -27,9 +27,9 @@ public class TabelaMalha extends JTable implements ObservadorTabela {
     private Map<Long, CarroSprite> sprites;
 
     public TabelaMalha(JPanel parent) {
-        this.controller = Controle.getInstance().getMalhaController();
-        this.controller.anexar(this);
-        Controle.getInstance().addMalhaTableObserver(this);
+        this.controller = Controle.getInstance().obterControleMalha();
+        this.controller.anexarObservadores(this);
+        Controle.getInstance().adicionarTabelaObservadores(this);
         this.parentPanel = parent;
         this.sprites = new HashMap<>();
         startBuffert();
@@ -55,8 +55,8 @@ public class TabelaMalha extends JTable implements ObservadorTabela {
     }
 
     public void startBuffert() {
-        this.orginalMalhaImages = new BufferedImage[controller.getColumn()][controller.getRow()];
-        this.canvas = new BufferedImage[controller.getColumn()][controller.getRow()];
+        this.orginalMalhaImages = new BufferedImage[controller.pegarTamanhoColuna()][controller.pegarTamanhoLinha()];
+        this.canvas = new BufferedImage[controller.pegarTamanhoColuna()][controller.pegarTamanhoLinha()];
         this.initializeProperties();
         initImages();
 
@@ -85,8 +85,8 @@ public class TabelaMalha extends JTable implements ObservadorTabela {
     }
 
     private void initImages() {
-        for (int column = 0; column < controller.getColumn(); column++) {
-            for (int row = 0; row < controller.getRow(); row++) {
+        for (int column = 0; column < controller.pegarTamanhoColuna(); column++) {
+            for (int row = 0; row < controller.pegarTamanhoLinha(); row++) {
                 orginalMalhaImages[column][row] = MapaImagens.getImagem((int) controller.getCasaValue(column, row));
                 canvas[column][row] = MapaImagens.getImagem((int) controller.getCasaValue(column, row));
             }
@@ -140,8 +140,8 @@ public class TabelaMalha extends JTable implements ObservadorTabela {
         int height = canvas[0][0].getHeight();
         int type = canvas[0][0].getType();
 
-        for (int column = 0; column < controller.getColumn(); column++) {
-            for (int row = 0; row < controller.getRow(); row++) {
+        for (int column = 0; column < controller.pegarTamanhoColuna(); column++) {
+            for (int row = 0; row < controller.pegarTamanhoLinha(); row++) {
                 BufferedImage bi = new BufferedImage(width, height, type);
                 Graphics2D g = bi.createGraphics();
                 g.drawImage(orginalMalhaImages[column][row], 0, 0, null);
@@ -184,12 +184,12 @@ public class TabelaMalha extends JTable implements ObservadorTabela {
 
         @Override
         public int getColumnCount() {
-            return controller.getColumn();
+            return controller.pegarTamanhoColuna();
         }
 
         @Override
         public int getRowCount() {
-            return controller.getRow();
+            return controller.pegarTamanhoLinha();
         }
 
         @Override

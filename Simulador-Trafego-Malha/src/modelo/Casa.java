@@ -72,7 +72,7 @@ public abstract class Casa implements InterfaceCasa {
     @Override
     public void setCarro(InterfaceCarro carro) {
         if (carro != null)
-            Controle.getInstance().getMalhaController().moveCarro(carro.getId(), colunm, row);
+            Controle.getInstance().obterControleMalha().movimentarCarro(carro.getId(), colunm, row);
         this.carro = carro;
     }
 

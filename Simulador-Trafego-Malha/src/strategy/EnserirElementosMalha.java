@@ -27,10 +27,10 @@ public class EnserirElementosMalha implements Movimentacao {
                 casa.setCarro(carro);
                 carro.setCasa(casa);
             } else {
-                casa = system.getMalhaController().getRespawnAleatorio();
+                casa = system.obterControleMalha().getRespawnAleatorio();
             }
         } while (carro.getCasa() == null);
-        system.notificarEntreiNaMalha(carro);
+        system.malhaNotificacaoEntrada(carro);
     }
 
 }

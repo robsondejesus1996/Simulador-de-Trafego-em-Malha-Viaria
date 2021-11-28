@@ -46,7 +46,7 @@ public class FramePrincipal extends JFrame implements FramePrincipalObserver {
         initFrameProperty();
         initComponnnets();
         initListeners();
-        controller.addFramePrincipalObserver(this);
+        controller.adicionarObservadoresTela(this);
     }
 
     private void initFrameProperty() {
@@ -110,7 +110,7 @@ public class FramePrincipal extends JFrame implements FramePrincipalObserver {
         this.btnStop = new JButton("Aguardar e Encerrar");
         this.btnStart = new JButton("Iniciar");
         this.jsNumCarro = new JSpinner();
-        jsNumCarro.setModel(new SpinnerNumberModel(1, 1, controller.getMalhaController().getNumCasasValida(), 1));
+        jsNumCarro.setModel(new SpinnerNumberModel(1, 1, controller.obterControleMalha().obterQuantidadeCasasValida(), 1));
         this.lbLimiteCarro = new JLabel("Informe a quantidade de carros: ");
 
         Insets insets = new Insets(0, 10, 0, 10);
@@ -194,7 +194,7 @@ public class FramePrincipal extends JFrame implements FramePrincipalObserver {
 
     public void initTableFrame() {
         jpTable.removeAll();
-        jsNumCarro.setModel(new SpinnerNumberModel(1, 1, controller.getMalhaController().getNumCasasValida(), 1));
+        jsNumCarro.setModel(new SpinnerNumberModel(1, 1, controller.obterControleMalha().obterQuantidadeCasasValida(), 1));
         jpTable.setLayout(new BoxLayout(jpTable, BoxLayout.PAGE_AXIS));
         table = new TabelaMalha(jpTable);
         JScrollPane pane = new JScrollPane();
@@ -221,7 +221,7 @@ public class FramePrincipal extends JFrame implements FramePrincipalObserver {
 
     private void btnStopListeners() {
         btnStop.setEnabled(false);
-        controller.pararRepawn();
+        controller.stopReaparecimento();
     }
 
     private void btnStartListeners() {
@@ -231,7 +231,7 @@ public class FramePrincipal extends JFrame implements FramePrincipalObserver {
         btnCarregarNovaMatriz.setEnabled(false);
 
         int numeroCarro = (int) jsNumCarro.getValue();
-        controller.startSimulation(numeroCarro);
+        controller.iniciarSimulacao(numeroCarro);
     }
 
     private void btnCarregarNovaMatrizListeners() {

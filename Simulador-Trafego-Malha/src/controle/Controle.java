@@ -24,108 +24,108 @@ import tela.ObservadorTabela;
  */
 public class Controle {
 
-    private static Controle instance;
-    private ControleArquivoMalha malhaController;
-    private FabricaAbstrata factory;
-    private int numeroDeCarroObjetivo;
-    private boolean simulationAtivo;
-    private Map<Long, InterfaceCarro> carrosEmEspera;
-    private Map<Long, InterfaceCarro> carrosEmMalha;
-    private List<FramePrincipalObserver> framePrincipalObservers;
-    private List<ObservadorTabela> malhaTablesObservers;
+    private static Controle singleton;
+    private ControleArquivoMalha controleMalha;
+    private FabricaAbstrata fact;
+    private int qtdCarros;
+    private boolean ativadaSimulacao;
+    private Map<Long, InterfaceCarro> qtdCarrosEsperando;
+    private Map<Long, InterfaceCarro> qtdCarrosMalha;
+    private List<FramePrincipalObserver> observadoresTela;
+    private List<ObservadorTabela> tabelaObservadoresMalha;
 
     private Controle() {
-        this.carrosEmMalha = new HashMap<>();
-        this.carrosEmEspera = new HashMap<>();
-        this.framePrincipalObservers = new ArrayList<>();
-        this.malhaTablesObservers = new ArrayList<>();
-        this.simulationAtivo = false;
+        this.qtdCarrosMalha = new HashMap<>();
+        this.qtdCarrosEsperando = new HashMap<>();
+        this.observadoresTela = new ArrayList<>();
+        this.tabelaObservadoresMalha = new ArrayList<>();
+        this.ativadaSimulacao = false;
 
     }
 
     public static synchronized Controle getInstance() {
-        if (instance == null) {
-            instance = new Controle();
+        if (singleton == null) {
+            singleton = new Controle();
         }
-        return instance;
+        return singleton;
     }
 
     /**
      * Ler Arquivo onde contem a matriz
      */
-    public void readFile(String text) throws FileNotFoundException, Exception {
+    public void carregarArquivo(String text) throws FileNotFoundException, Exception {
         LeituraMalha ler = new LeituraMalha(text);
-        malhaController = new ControleArquivoMalha(ler.getMatrix());
+        controleMalha = new ControleArquivoMalha(ler.getMatrix());
     }
 
-    public Object getCasa(int col, int row) {
-        return malhaController.getCasaValue(col, row);
+    public Object obterCasa(int col, int row) {
+        return controleMalha.getCasaValue(col, row);
     }
 
-    public ControleArquivoMalha getMalhaController() {
-        return malhaController;
+    public ControleArquivoMalha obterControleMalha() {
+        return controleMalha;
     }
 
-    public FabricaAbstrata getFactory() {
-        return factory;
+    public FabricaAbstrata obterFabrica() {
+        return fact;
     }
 
-    public void setFactory(String factory) {
-        this.factory = factory.equals("Monitor") ? new MonitorFabrica() : new SemaforoFabrica();
+    public void definirFabrica(String factory) {
+        this.fact = factory.equals("Monitor") ? new MonitorFabrica() : new SemaforoFabrica();
     }
 
     /**
      * Rebute Malha
      */
-    public void rebutMalha() {
-        this.malhaController.removeObservers();
+    public void redefinirMalhaObservadores() {
+        this.controleMalha.removerObservadores();
     }
 
-    public void startSimulation(int numeroCarro) {
-        this.numeroDeCarroObjetivo = numeroCarro;
-        this.simulationAtivo = true;
+    public void iniciarSimulacao(int numeroCarro) {
+        this.qtdCarros = numeroCarro;
+        this.ativadaSimulacao = true;
 
-        for (int i = 0; i < numeroDeCarroObjetivo; i++) {
-            newCarroEmMalha();
+        for (int i = 0; i < qtdCarros; i++) {
+            novoCarroMalha();
         }
 
         Thread respawn = new Thread(this::addAutomatico);
         respawn.start();
     }
 
-    private void newCarroEmMalha() {
+    private void novoCarroMalha() {
         Carro carro = new Carro();
-        carrosEmEspera.put(carro.getId(), carro);
-        malhaTablesObservers.forEach((observer) -> observer.createCarro(carro.getId(), carro.getRBG(), -1, -1));
-        carro.enterSimulation(malhaController.getRespawnAleatorio());
+        qtdCarrosEsperando.put(carro.getId(), carro);
+        tabelaObservadoresMalha.forEach((observer) -> observer.createCarro(carro.getId(), carro.getRBG(), -1, -1));
+        carro.enterSimulation(controleMalha.getRespawnAleatorio());
     }
 
-    public void notificarEntreiNaMalha(InterfaceCarro carro) {
-        carrosEmEspera.remove(carro.getId());
-        carrosEmMalha.put(carro.getId(), carro);
-        SwingUtilities.invokeLater(() -> framePrincipalObservers.forEach((observer) -> observer.notificarNumeroDeCarro(carrosEmMalha.size())
+    public void malhaNotificacaoEntrada(InterfaceCarro carro) {
+        qtdCarrosEsperando.remove(carro.getId());
+        qtdCarrosMalha.put(carro.getId(), carro);
+        SwingUtilities.invokeLater(() -> observadoresTela.forEach((observer) -> observer.notificarNumeroDeCarro(qtdCarrosMalha.size())
         ));
     }
 
-    public void notificarCarroMorto(InterfaceCarro carro) {
-        malhaTablesObservers.forEach((observer) -> observer.removeCarro(carro.getId()));
-        carrosEmMalha.remove(carro.getId());
-        SwingUtilities.invokeLater(() -> framePrincipalObservers.forEach((observer) -> observer.notificarNumeroDeCarro(carrosEmMalha.size())));
+    public void carroDesativarNotivacacao(InterfaceCarro carro) { // notificar carro morto 
+        tabelaObservadoresMalha.forEach((observer) -> observer.removeCarro(carro.getId()));
+        qtdCarrosMalha.remove(carro.getId());
+        SwingUtilities.invokeLater(() -> observadoresTela.forEach((observer) -> observer.notificarNumeroDeCarro(qtdCarrosMalha.size())));
     }
 
-    public void addFramePrincipalObserver(FramePrincipalObserver observer) {
-        this.framePrincipalObservers.add(observer);
+    public void adicionarObservadoresTela(FramePrincipalObserver observer) {
+        this.observadoresTela.add(observer);
     }
 
-    public void addMalhaTableObserver(ObservadorTabela observer) {
-        this.malhaTablesObservers.add(observer);
+    public void adicionarTabelaObservadores(ObservadorTabela observer) {
+        this.tabelaObservadoresMalha.add(observer);
     }
 
     //Runneable
     private void addAutomatico() {
-        while (simulationAtivo) {
-            for (int i = (carrosEmEspera.size() + carrosEmMalha.size()); i < numeroDeCarroObjetivo; i++) {
-                newCarroEmMalha();
+        while (ativadaSimulacao) {
+            for (int i = (qtdCarrosEsperando.size() + qtdCarrosMalha.size()); i < qtdCarros; i++) {
+                novoCarroMalha();
             }
             try {
                 Thread.sleep(500);
@@ -135,8 +135,8 @@ public class Controle {
         }
 
         List<InterfaceCarro> arrayList = new ArrayList<>();
-        arrayList.addAll(carrosEmMalha.values());
-        arrayList.addAll(carrosEmEspera.values());
+        arrayList.addAll(qtdCarrosMalha.values());
+        arrayList.addAll(qtdCarrosEsperando.values());
 
         arrayList.forEach((value) -> {
             try {
@@ -146,10 +146,10 @@ public class Controle {
             }
         });
 
-        framePrincipalObservers.forEach(FramePrincipalObserver::notificarSimulacaoFinalizada);
+        observadoresTela.forEach(FramePrincipalObserver::notificarSimulacaoFinalizada);
     }
 
-    public void pararRepawn() {
-        simulationAtivo = false;
+    public void stopReaparecimento() {
+        ativadaSimulacao = false;
     }
 }

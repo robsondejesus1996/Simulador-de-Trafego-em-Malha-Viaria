@@ -154,7 +154,7 @@ public class FrameConfig extends JFrame {
         if (retorno == JFileChooser.APPROVE_OPTION) {
             String absolutePath = fileChooser.getSelectedFile().getAbsolutePath();
             try {
-                controller.readFile(absolutePath);
+                controller.carregarArquivo(absolutePath);
 
                 caminho = absolutePath;
                 tfArquivo.setText(caminho);
@@ -178,15 +178,15 @@ public class FrameConfig extends JFrame {
         }
 
         if (rbMonitor.isSelected()) {
-            controller.setFactory("Monitor");
+            controller.definirFabrica("Monitor");
         } else if (rbSemafaro.isSelected()) {
-            controller.setFactory("Semafaro");
+            controller.definirFabrica("Semafaro");
         }
 
-        controller.getMalhaController().initMalha();
+        controller.obterControleMalha().iniciarMalha();
 
         if (framePrincipal != null) {
-            controller.rebutMalha();
+            controller.redefinirMalhaObservadores();
             framePrincipal.initTableFrame();
         } else {
             EventQueue.invokeLater(() -> new FramePrincipal().setVisible(true));

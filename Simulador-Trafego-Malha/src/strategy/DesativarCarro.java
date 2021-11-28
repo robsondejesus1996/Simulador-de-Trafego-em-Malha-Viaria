@@ -26,7 +26,7 @@ public class DesativarCarro implements Movimentacao {
         origem.setCarro(null);
         origem.liberarRecurso();
         carro.desativar();
-        Controle.getInstance().notificarCarroMorto(carro);
+        Controle.getInstance().carroDesativarNotivacacao(carro);
     }
 
 }
