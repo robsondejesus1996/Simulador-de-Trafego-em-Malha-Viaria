@@ -8,19 +8,19 @@ import modelo.InterfaceCasa;
  */
 public class MovimentacaoUmaCasa implements Movimentacao {
 
-    private InterfaceCasa origem;
-    private InterfaceCasa destino;
+    private InterfaceCasa casaOrigem;
+    private InterfaceCasa casaDestino;
 
     public MovimentacaoUmaCasa(InterfaceCasa origem, InterfaceCasa destino) {
-        this.origem = origem;
-        this.destino = destino;
+        this.casaOrigem = origem;
+        this.casaDestino = destino;
     }
 
     @Override
-    public void executar() {
-        destino.movimentar(origem.obterCarro());
-        origem.definirCarro(null);
-        origem.liberarRecurso();
+    public void run() {
+        casaDestino.movimentar(casaOrigem.obterCarro());
+        casaOrigem.definirCarro(null);
+        casaOrigem.liberarRecurso();
     }
 
 }

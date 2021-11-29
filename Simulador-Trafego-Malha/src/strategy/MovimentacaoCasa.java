@@ -13,37 +13,37 @@ import modelo.InterfaceCasa;
 public class MovimentacaoCasa implements Movimentacao {
 
     //Começo de Tudo
-    private final InterfaceCasa origem;
+    private final InterfaceCasa casaOrigem;
     //Fim de Tudo
-    private final InterfaceCasa destino;
+    private final InterfaceCasa casaDestino;
 
     //Armazena todos o caminho INCLUSIVEL O destino
-    private final List<InterfaceCasa> caminho;
+    private final List<InterfaceCasa> movimentacaoCaminho;
     //random
-    private final Random random;
+    private final Random aleatorio;
 
     public MovimentacaoCasa(InterfaceCasa origem, InterfaceCasa destino, List<InterfaceCasa> caminho) {
-        this.origem = origem;
-        this.destino = destino;
-        this.caminho = Collections.unmodifiableList(caminho);
-        this.random = new Random();
+        this.casaOrigem = origem;
+        this.casaDestino = destino;
+        this.movimentacaoCaminho = Collections.unmodifiableList(caminho);
+        this.aleatorio = new Random();
     }
 
     @Override
-    public void executar() {
-        InterfaceCarro carro = origem.obterCarro();
+    public void run() {
+        InterfaceCarro carro = casaOrigem.obterCarro();
         int saidaInvalida = 0;
-        int limiteDeTentativas = random.nextInt(10) + 1;
+        int limiteDeTentativas = aleatorio.nextInt(10) + 1;
         boolean liberado;
         do {
             liberado = true;
             //Vai tentar pegar o recurso de todas!!
-            if (destino.alocacaoCasa()) {
+            if (casaDestino.alocacaoCasa()) {
 
-                for (int i = 0; i < caminho.size() - 1; i++) {
-                    InterfaceCasa casa = caminho.get(i);
+                for (int i = 0; i < movimentacaoCaminho.size() - 1; i++) {
+                    InterfaceCasa casa = movimentacaoCaminho.get(i);
                     if (!casa.alocacaoCasa()) {
-                        destino.liberarRecurso();
+                        casaDestino.liberarRecurso();
                         liberado = liberarRecursos(i);
                         break;
                     }
@@ -59,7 +59,7 @@ public class MovimentacaoCasa implements Movimentacao {
             }
 
             if (!liberado) {
-                carro.sleep(100 + random.nextInt(200));
+                carro.sleep(100 + aleatorio.nextInt(200));
             }
 
         } while (!liberado);
@@ -67,22 +67,22 @@ public class MovimentacaoCasa implements Movimentacao {
         if (saidaInvalida < limiteDeTentativas) {
             int velocidade = carro.obterVelocidade();
 
-            origem.excluirCarro();
+            casaOrigem.excluirCarro();
 
-            InterfaceCasa primeiracasa = caminho.get(0);
+            InterfaceCasa primeiracasa = movimentacaoCaminho.get(0);
             primeiracasa.definirCarro(carro);
             carro.definirCasa(primeiracasa);
 
-            origem.liberarRecurso();
+            casaOrigem.liberarRecurso();
             carro.sleep(velocidade);
 
-            for (int i = 0; i < caminho.size() - 1; i++) {
+            for (int i = 0; i < movimentacaoCaminho.size() - 1; i++) {
                 //saindo da casa
-                InterfaceCasa casaAtual = caminho.get(i);
+                InterfaceCasa casaAtual = movimentacaoCaminho.get(i);
                 casaAtual.excluirCarro();
 
                 //entrando na casa
-                InterfaceCasa novaCasa = caminho.get(i + 1);
+                InterfaceCasa novaCasa = movimentacaoCaminho.get(i + 1);
                 novaCasa.definirCarro(carro);
                 carro.definirCasa(novaCasa);
 
@@ -95,7 +95,7 @@ public class MovimentacaoCasa implements Movimentacao {
 
     private boolean liberarRecursos(int i) {
         for (int j = (i - 1); j >= 0; j--) {
-            caminho.get(j).liberarRecurso();
+            movimentacaoCaminho.get(j).liberarRecurso();
         }
         return false;
     }

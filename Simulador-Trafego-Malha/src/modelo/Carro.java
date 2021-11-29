@@ -90,7 +90,7 @@ public class Carro extends Thread implements InterfaceCarro {
 
     @Override
     public void movimentar() {
-        rota.executar();
+        rota.run();
         rota = null;
     }
 

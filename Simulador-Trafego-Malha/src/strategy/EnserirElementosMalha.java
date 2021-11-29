@@ -11,26 +11,26 @@ import modelo.InterfaceCasa;
  */
 public class EnserirElementosMalha implements Movimentacao {
 
-    private InterfaceCasa casa;
-    private InterfaceCarro carro;
+    private InterfaceCasa malhaCasa;
+    private InterfaceCarro malhaCarro;
 
     public EnserirElementosMalha(Carro carro, InterfaceCasa casa) {
-        this.casa = casa;
-        this.carro = carro;
+        this.malhaCasa = casa;
+        this.malhaCarro = carro;
     }
 
     @Override
-    public void executar() {
+    public void run() {
         Controle system = Controle.getInstance();
         do {
-            if (casa.alocacaoCasa()) {
-                casa.definirCarro(carro);
-                carro.definirCasa(casa);
+            if (malhaCasa.alocacaoCasa()) {
+                malhaCasa.definirCarro(malhaCarro);
+                malhaCarro.definirCasa(malhaCasa);
             } else {
-                casa = system.obterControleMalha().getRespawnAleatorio();
+                malhaCasa = system.obterControleMalha().getRespawnAleatorio();
             }
-        } while (carro.obterCasa()== null);
-        system.malhaNotificacaoEntrada(carro);
+        } while (malhaCarro.obterCasa()== null);
+        system.malhaNotificacaoEntrada(malhaCarro);
     }
 
 }

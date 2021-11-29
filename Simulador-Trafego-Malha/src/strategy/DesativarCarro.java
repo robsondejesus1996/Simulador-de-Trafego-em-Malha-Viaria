@@ -14,17 +14,17 @@ public class DesativarCarro implements Movimentacao {
      * Matar o carro 
      */
 
-    private final InterfaceCasa origem;
+    private final InterfaceCasa casaOrigem;
 
     public DesativarCarro(InterfaceCasa origem) {
-        this.origem = origem;
+        this.casaOrigem = origem;
     }
 
     @Override
-    public void executar() {
-        InterfaceCarro carro = origem.obterCarro();
-        origem.definirCarro(null);
-        origem.liberarRecurso();
+    public void run() {
+        InterfaceCarro carro = casaOrigem.obterCarro();
+        casaOrigem.definirCarro(null);
+        casaOrigem.liberarRecurso();
         carro.excluir();
         Controle.getInstance().carroDesativarNotivacacao(carro);
     }
