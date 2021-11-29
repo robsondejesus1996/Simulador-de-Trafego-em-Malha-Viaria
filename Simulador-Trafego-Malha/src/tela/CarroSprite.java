@@ -16,7 +16,7 @@ public class CarroSprite {
     public CarroSprite(int color, int column, int row) {
         this.column = column;
         this.row = row;
-        this.image = MapaImagens.replaceColor(MapaImagens.getImagem(MapaImagens.CARRO), color);
+        this.image = MapaImagens.substituirCor(MapaImagens.getImagem(MapaImagens.CARRO), color);
     }
 
     public void setColumn(int column) {

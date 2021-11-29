@@ -10,31 +10,31 @@ import java.util.Scanner;
  */
 public class LeituraMalha {
 
-    private int[][] matrix;
-    private String caminho;
+    private int[][] malhaMatriz;
+    private String arquivoCaminho;
 
     public LeituraMalha(String caminho) throws FileNotFoundException, Exception {
-        this.caminho = caminho;
-        lerAquivo();
+        this.arquivoCaminho = caminho;
+        leituraArquivo();
     }
 
-    public int[][] getMatrix() throws Exception {
-        if (matrix == null) {
+    public int[][] obterMatriz() throws Exception {
+        if (malhaMatriz == null) {
             throw new Exception("Matrix não Intaciada");
         }
-        return matrix;
+        return malhaMatriz;
     }
 
-    private void lerAquivo() throws FileNotFoundException, Exception {
-        Scanner scanner = new Scanner(new File(caminho));
+    private void leituraArquivo() throws FileNotFoundException, Exception {
+        Scanner scanner = new Scanner(new File(arquivoCaminho));
 
         try {
             int linha = Integer.parseInt(scanner.nextLine());
             int coluna = Integer.parseInt(scanner.nextLine());
-            matrix = new int[coluna][linha];
+            malhaMatriz = new int[coluna][linha];
         } catch (Exception e) {
             e.printStackTrace();
-            throw new Exception("Arquivo Sem Formatação Adequada");
+            throw new Exception("Problema na leitura do arquivo, possivel problema no formato. ");
         }
 
         int linhaIndex = 0;
@@ -44,7 +44,7 @@ public class LeituraMalha {
             String[] lv = l.split("	");
 
             for (int i = 0; i < lv.length; i++) {
-                matrix[i][linhaIndex] = Integer.parseInt(lv[i]);
+                malhaMatriz[i][linhaIndex] = Integer.parseInt(lv[i]);
             }
             linhaIndex++;
         }

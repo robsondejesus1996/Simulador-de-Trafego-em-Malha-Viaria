@@ -55,7 +55,7 @@ public class Controle {
      */
     public void carregarArquivo(String text) throws FileNotFoundException, Exception {
         LeituraMalha ler = new LeituraMalha(text);
-        controleMalha = new ControleArquivoMalha(ler.getMatrix());
+        controleMalha = new ControleArquivoMalha(ler.obterMatriz());
     }
 
     public Object obterCasa(int col, int row) {

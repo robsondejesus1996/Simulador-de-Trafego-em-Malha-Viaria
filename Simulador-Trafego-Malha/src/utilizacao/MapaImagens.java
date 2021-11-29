@@ -27,9 +27,9 @@ public class MapaImagens {
     public static final String OUTROS = "img/outro.png";
     public static final String CARRO = "img/carro.png";
 
-    private static Random random;
+    private static Random aleatorio;
 
-    private static void initGeral() throws IOException {
+    private static void inicializacao() throws IOException {
         imagems.put(ZERO, ImageIO.read(new File(MapaImagens.ZERO)));
         imagems.put(CIMA, ImageIO.read(new File(MapaImagens.CIMA)));
         imagems.put(BAIXO, ImageIO.read(new File(MapaImagens.BAIXO)));
@@ -39,7 +39,7 @@ public class MapaImagens {
         imagems.put(CARRO, ImageIO.read(new File(MapaImagens.CARRO)));
     }
 
-    public static BufferedImage getImagem(int in) {
+    public static BufferedImage obterImagem(int in) {
         return switch (in) {
             case 0 -> getImagem(ZERO);
             case 1 -> getImagem(CIMA);
@@ -53,7 +53,7 @@ public class MapaImagens {
     public synchronized static BufferedImage getImagem(String imagem) {
         if (imagems.isEmpty()) {
             try {
-                initGeral();
+                inicializacao();
             } catch (IOException ex) {
                 Logger.getLogger(MapaImagens.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -61,7 +61,7 @@ public class MapaImagens {
         return imagems.get(imagem);
     }
 
-    public static BufferedImage replaceColor(BufferedImage image, int preferred) {
+    public static BufferedImage substituirCor(BufferedImage image, int preferred) {
         int width = image.getWidth();
         int height = image.getHeight();
         BufferedImage newImage = new BufferedImage(width, height, image.getType());
@@ -83,17 +83,17 @@ public class MapaImagens {
     }
 
     public static Color gerarCorAleatoriamente() {
-        int r = getRandom().nextInt(256);
-        int g = getRandom().nextInt(256);
-        int b = getRandom().nextInt(256);
+        int r = obterAleatorio().nextInt(256);
+        int g = obterAleatorio().nextInt(256);
+        int b = obterAleatorio().nextInt(256);
         return new Color(r, g, b);
     }
 
 
-    private synchronized static Random getRandom() {
-        if (random == null) {
-            random = new Random();
+    private synchronized static Random obterAleatorio() {
+        if (aleatorio == null) {
+            aleatorio = new Random();
         }
-        return random;
+        return aleatorio;
     }
 }

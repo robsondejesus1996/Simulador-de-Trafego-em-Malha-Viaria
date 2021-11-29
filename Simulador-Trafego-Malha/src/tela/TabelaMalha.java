@@ -87,8 +87,8 @@ public class TabelaMalha extends JTable implements ObservadorTabela {
     private void initImages() {
         for (int column = 0; column < controller.pegarTamanhoColuna(); column++) {
             for (int row = 0; row < controller.pegarTamanhoLinha(); row++) {
-                orginalMalhaImages[column][row] = MapaImagens.getImagem((int) controller.getCasaValue(column, row));
-                canvas[column][row] = MapaImagens.getImagem((int) controller.getCasaValue(column, row));
+                orginalMalhaImages[column][row] = MapaImagens.obterImagem((int) controller.getCasaValue(column, row));
+                canvas[column][row] = MapaImagens.obterImagem((int) controller.getCasaValue(column, row));
             }
         }
         this.repaint();
