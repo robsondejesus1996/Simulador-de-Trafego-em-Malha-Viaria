@@ -14,25 +14,25 @@ import java.util.Random;
 public abstract class Casa implements InterfaceCasa {
 
     protected InterfaceCarro carro;
-    protected int colunm, row;
+    protected int coluna, linha;
     protected int valor;
     protected Random random;
     protected List<Movimentacao> movimentacoes;
 
-    public Casa(int valor, int colunm, int row) {
+    public Casa(int valor, int coluna, int linha) {
         this.movimentacoes = new ArrayList<>();
         this.valor = valor;
-        this.colunm = colunm;
-        this.row = row;
+        this.coluna = coluna;
+        this.linha = linha;
     }
 
     @Override
-    public void addRota(Movimentacao command) {
+    public void adicionarCaminho(Movimentacao command) {
         movimentacoes.add(command);
     }
 
     @Override
-    public Movimentacao getRota() {
+    public Movimentacao obterCaminho() {
 
         if (movimentacoes.size() > 1) {
             return movimentacoes.get(getRandom().nextInt(movimentacoes.size()));
@@ -50,34 +50,34 @@ public abstract class Casa implements InterfaceCasa {
     }
 
     @Override
-    public int getValor() {
+    public int obterValor() {
         return valor;
     }
 
     @Override
-    public int getRow() {
-        return row;
+    public int obterLinha() {
+        return linha;
     }
 
     @Override
-    public int getColunm() {
-        return colunm;
+    public int obterColuna() {
+        return coluna;
     }
 
     @Override
-    public InterfaceCarro getCarro() {
+    public InterfaceCarro obterCarro() {
         return carro;
     }
 
     @Override
-    public void setCarro(InterfaceCarro carro) {
+    public void definirCarro(InterfaceCarro carro) {
         if (carro != null)
-            Controle.getInstance().obterControleMalha().movimentarCarro(carro.getId(), colunm, row);
+            Controle.getInstance().obterControleMalha().movimentarCarro(carro.getId(), coluna, linha);
         this.carro = carro;
     }
 
     @Override
-    public void removerCarro() {
+    public void excluirCarro() {
         InterfaceCarro p = carro;
         carro = null;
     }
@@ -85,8 +85,8 @@ public abstract class Casa implements InterfaceCasa {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 59 * hash + colunm;
-        hash = 59 * hash + row;
+        hash = 59 * hash + coluna;
+        hash = 59 * hash + linha;
         return hash;
     }
 
@@ -102,14 +102,14 @@ public abstract class Casa implements InterfaceCasa {
             return false;
         }
         final Casa other = (Casa) obj;
-        if (this.colunm != other.colunm) {
+        if (this.coluna != other.coluna) {
             return false;
         }
-        return this.row == other.row;
+        return this.linha == other.linha;
     }
 
     @Override
     public String toString() {
-        return "Casa{" + "colunm=" + colunm + ", row=" + row + ", valor=" + valor + '}';
+        return "Casa{" + "coluna=" + coluna + ", linha=" + linha + ", valor=" + valor + '}';
     }
 }

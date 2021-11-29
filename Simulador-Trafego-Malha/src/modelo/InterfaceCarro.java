@@ -8,22 +8,22 @@ import modelo.InterfaceCasa;
  */
 public interface InterfaceCarro {
 
-    void desativar();
+    void excluir();
 
-    void enterSimulation(InterfaceCasa casaAleatoria);
+    void inserirSimulacao(InterfaceCasa casaAleatoria);
 
     @Override
     boolean equals(Object obj);
 
-    int getRBG();
+    int getCores(); // rgbd
 
-    void obterRota();
+    void buscarCaminho();
 
-    void mover();
+    void movimentar();
 
-    void setCasa(InterfaceCasa newCasa);
+    void definirCasa(InterfaceCasa newCasa);
 
-    InterfaceCasa getCasa();
+    InterfaceCasa obterCasa();
 
     long getId();
 
@@ -31,6 +31,6 @@ public interface InterfaceCarro {
 
     void sleep(int nextInt);
 
-    int getVelocidade();
+    int obterVelocidade();
 
 }

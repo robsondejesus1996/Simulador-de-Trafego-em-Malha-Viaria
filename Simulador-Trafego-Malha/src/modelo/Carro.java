@@ -16,7 +16,7 @@ import modelo.InterfaceCasa;
 public class Carro extends Thread implements InterfaceCarro {
 
     private boolean ativo;
-    private final int rgb;
+    private final int cores;
     private InterfaceCasa casa;
     private Movimentacao rota;
     private final int velocidade;
@@ -24,27 +24,27 @@ public class Carro extends Thread implements InterfaceCarro {
     public Carro() {
         this.ativo = true;
         this.velocidade = 200 + new Random().nextInt(300);
-        this.rgb = MapaImagens.gerarCorAleatoriamente().getRGB();
+        this.cores = MapaImagens.gerarCorAleatoriamente().getRGB();
     }
 
     @Override
-    public void desativar() {
+    public void excluir() {
         this.ativo = false;
         Controle.getInstance().obterControleMalha().excluirCarroObservadores(this.getId());
     }
 
     @Override
-    public int getRBG() {
-        return rgb;
+    public int getCores() {
+        return cores;
     }
 
     @Override
-    public void obterRota() {
-        rota = this.casa.getRota();
+    public void buscarCaminho() {
+        rota = this.casa.obterCaminho();
     }
 
     @Override
-    public void setCasa(InterfaceCasa newCasa) {
+    public void definirCasa(InterfaceCasa newCasa) {
         this.casa = newCasa;
     }
 
@@ -64,12 +64,12 @@ public class Carro extends Thread implements InterfaceCarro {
     }
 
     @Override
-    public InterfaceCasa getCasa() {
+    public InterfaceCasa obterCasa() {
         return casa;
     }
 
     @Override
-    public int getVelocidade() {
+    public int obterVelocidade() {
         return velocidade;
     }
 
@@ -83,27 +83,27 @@ public class Carro extends Thread implements InterfaceCarro {
     }
 
     @Override
-    public void enterSimulation(InterfaceCasa casaAleatoria) {
+    public void inserirSimulacao(InterfaceCasa casaAleatoria) {
         rota = new EnserirElementosMalha(this, casaAleatoria);
         start();
     }
 
     @Override
-    public void mover() {
+    public void movimentar() {
         rota.executar();
         rota = null;
     }
 
     @Override
     public void run() {
-        mover();
+        movimentar();
         sleep(velocidade);
         while (ativo) {
-            obterRota();
+            buscarCaminho();
             if (rota == null) {
                 break;
             }
-            mover();
+            movimentar();
             sleep(velocidade);
         }
     }

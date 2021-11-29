@@ -12,34 +12,34 @@ import java.util.logging.Logger;
  */
 public class MonitoresCasas extends Casa {
 
-    private Lock lock;
+    private Lock bloquear;
 
-    public MonitoresCasas(int valor, int colunm, int row) {
-        super(valor, colunm, row);
-        this.lock = new ReentrantLock(true);
+    public MonitoresCasas(int valor, int coluna, int linha) {
+        super(valor, coluna, linha);
+        this.bloquear = new ReentrantLock(true);
     }
 
     @Override
-    public void mover(InterfaceCarro carro) {
-        lock.lock();
-        InterfaceCasa casaAnterior = carro.getCasa();
+    public void movimentar(InterfaceCarro carro) {
+        bloquear.lock();
+        InterfaceCasa casaAnterior = carro.obterCasa();
         if (casaAnterior != null) {
-            casaAnterior.setCarro(null);
+            casaAnterior.definirCarro(null);
         }
-        carro.setCasa(this);
-        setCarro(carro);
+        carro.definirCasa(this);
+        definirCarro(carro);
     }
 
     @Override
     public void liberarRecurso() {
-        lock.unlock();
+        bloquear.unlock();
     }
 
     //Necessita do Lock
     @Override
-    public boolean reservarCasa() {
+    public boolean alocacaoCasa() {
         try {
-            return lock.tryLock(15, TimeUnit.MILLISECONDS);
+            return bloquear.tryLock(15, TimeUnit.MILLISECONDS);
         } catch (InterruptedException ex) {
             Logger.getLogger(MonitoresCasas.class.getName()).log(Level.SEVERE, null, ex);
             return false;

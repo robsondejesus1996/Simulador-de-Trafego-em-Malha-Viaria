@@ -23,13 +23,13 @@ public class EnserirElementosMalha implements Movimentacao {
     public void executar() {
         Controle system = Controle.getInstance();
         do {
-            if (casa.reservarCasa()) {
-                casa.setCarro(carro);
-                carro.setCasa(casa);
+            if (casa.alocacaoCasa()) {
+                casa.definirCarro(carro);
+                carro.definirCasa(casa);
             } else {
                 casa = system.obterControleMalha().getRespawnAleatorio();
             }
-        } while (carro.getCasa() == null);
+        } while (carro.obterCasa()== null);
         system.malhaNotificacaoEntrada(carro);
     }
 

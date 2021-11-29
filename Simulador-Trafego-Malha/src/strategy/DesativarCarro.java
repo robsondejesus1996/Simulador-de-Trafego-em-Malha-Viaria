@@ -22,10 +22,10 @@ public class DesativarCarro implements Movimentacao {
 
     @Override
     public void executar() {
-        InterfaceCarro carro = origem.getCarro();
-        origem.setCarro(null);
+        InterfaceCarro carro = origem.obterCarro();
+        origem.definirCarro(null);
         origem.liberarRecurso();
-        carro.desativar();
+        carro.excluir();
         Controle.getInstance().carroDesativarNotivacacao(carro);
     }
 

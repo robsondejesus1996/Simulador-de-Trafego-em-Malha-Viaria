@@ -9,25 +9,25 @@ import strategy.Movimentacao;
  */
 public interface InterfaceCasa {
 
-    void addRota(Movimentacao command);
+    void adicionarCaminho(Movimentacao command);
 
-    Movimentacao getRota();
+    Movimentacao obterCaminho();
 
-    int getColunm();
+    int obterColuna();
 
-    int getRow();
+    int obterLinha();
 
-    int getValor();
+    int obterValor();
 
     void liberarRecurso();
 
-    void mover(InterfaceCarro carro);
+    void movimentar(InterfaceCarro carro);
 
-    boolean reservarCasa();
+    boolean alocacaoCasa();//reserva de casa
 
-    void setCarro(InterfaceCarro carro);
+    void definirCarro(InterfaceCarro carro);
 
-    InterfaceCarro getCarro();
+    InterfaceCarro obterCarro();
 
-    void removerCarro();
+    void excluirCarro();
 }

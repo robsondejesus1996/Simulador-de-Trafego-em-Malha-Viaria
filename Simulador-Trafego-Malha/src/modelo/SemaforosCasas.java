@@ -20,15 +20,15 @@ public class SemaforosCasas extends Casa {
     }
 
     @Override
-    public void mover(InterfaceCarro carro) {
+    public void movimentar(InterfaceCarro carro) {
         try {
             mutex.acquire();
-            InterfaceCasa casaAnterior = carro.getCasa();
+            InterfaceCasa casaAnterior = carro.obterCasa();
             if (casaAnterior != null) {
-                casaAnterior.setCarro(null);
+                casaAnterior.definirCarro(null);
             }
-            carro.setCasa(this);
-            setCarro(carro);
+            carro.definirCasa(this);
+            definirCarro(carro);
         } catch (InterruptedException ex) {
             Logger.getLogger(SemaforosCasas.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -40,7 +40,7 @@ public class SemaforosCasas extends Casa {
     }
 
     @Override
-    public boolean reservarCasa() {
+    public boolean alocacaoCasa() {
         try {
             return mutex.tryAcquire(15, TimeUnit.MILLISECONDS);
         } catch (InterruptedException ex) {

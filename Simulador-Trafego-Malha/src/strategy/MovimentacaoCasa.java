@@ -31,18 +31,18 @@ public class MovimentacaoCasa implements Movimentacao {
 
     @Override
     public void executar() {
-        InterfaceCarro carro = origem.getCarro();
+        InterfaceCarro carro = origem.obterCarro();
         int saidaInvalida = 0;
         int limiteDeTentativas = random.nextInt(10) + 1;
         boolean liberado;
         do {
             liberado = true;
             //Vai tentar pegar o recurso de todas!!
-            if (destino.reservarCasa()) {
+            if (destino.alocacaoCasa()) {
 
                 for (int i = 0; i < caminho.size() - 1; i++) {
                     InterfaceCasa casa = caminho.get(i);
-                    if (!casa.reservarCasa()) {
+                    if (!casa.alocacaoCasa()) {
                         destino.liberarRecurso();
                         liberado = liberarRecursos(i);
                         break;
@@ -65,13 +65,13 @@ public class MovimentacaoCasa implements Movimentacao {
         } while (!liberado);
 
         if (saidaInvalida < limiteDeTentativas) {
-            int velocidade = carro.getVelocidade();
+            int velocidade = carro.obterVelocidade();
 
-            origem.removerCarro();
+            origem.excluirCarro();
 
             InterfaceCasa primeiracasa = caminho.get(0);
-            primeiracasa.setCarro(carro);
-            carro.setCasa(primeiracasa);
+            primeiracasa.definirCarro(carro);
+            carro.definirCasa(primeiracasa);
 
             origem.liberarRecurso();
             carro.sleep(velocidade);
@@ -79,12 +79,12 @@ public class MovimentacaoCasa implements Movimentacao {
             for (int i = 0; i < caminho.size() - 1; i++) {
                 //saindo da casa
                 InterfaceCasa casaAtual = caminho.get(i);
-                casaAtual.removerCarro();
+                casaAtual.excluirCarro();
 
                 //entrando na casa
                 InterfaceCasa novaCasa = caminho.get(i + 1);
-                novaCasa.setCarro(carro);
-                carro.setCasa(novaCasa);
+                novaCasa.definirCarro(carro);
+                carro.definirCasa(novaCasa);
 
                 casaAtual.liberarRecurso();
 

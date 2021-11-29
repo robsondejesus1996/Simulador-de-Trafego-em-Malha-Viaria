@@ -59,7 +59,7 @@ public class ControleArquivoMalha {
     }
 
     public Object getCasaValue(int col, int row) {
-        return malhaMatrizCasa[col][row].getValor();
+        return malhaMatrizCasa[col][row].obterValor();
     }
 
     private void iniciarCasas() {
@@ -67,7 +67,7 @@ public class ControleArquivoMalha {
         for (int row = 0; row < malhaMatriz[0].length; row++) {
             for (int coluna = 0; coluna < malhaMatriz.length; coluna++) {
                 malhaMatrizCasa[coluna][row] = factory.construirCasa(malhaMatriz[coluna][row], coluna, row);
-                int valor = malhaMatrizCasa[coluna][row].getValor();
+                int valor = malhaMatrizCasa[coluna][row].obterValor();
                 if (valor == 1 || valor == 2 || valor == 3 || valor == 4) {
                     qtdCasasValidas++;
                 }
@@ -81,9 +81,9 @@ public class ControleArquivoMalha {
         for (int linha = 0; linha < pegarTamanhoLinha(); linha++) {
             for (int coluna = 0; coluna < pegarTamanhoColuna(); coluna++) {
                 //Se houver valor na casa significa que a mesma faz parte da malha
-                if (malhaMatrizCasa[coluna][linha].getValor() != 0) {
+                if (malhaMatrizCasa[coluna][linha].obterValor() != 0) {
                     int lado = 0;
-                    int valorCasa = malhaMatrizCasa[coluna][linha].getValor();
+                    int valorCasa = malhaMatrizCasa[coluna][linha].obterValor();
 
                     if (coluna == 0) {
                         lado = 1;
@@ -156,23 +156,23 @@ public class ControleArquivoMalha {
         //Adicionar os commands dentro da casa
         //Add Pontos de Morte
         for (InterfaceCasa iCasa : MorteCasas) {
-            iCasa.addRota(new DesativarCarro(iCasa));
+            iCasa.adicionarCaminho(new DesativarCarro(iCasa));
         }
         //Agora percorre a estrutura para encontrar as possíveis rotas de cada casa
         for (int linha = 0; linha < pegarTamanhoLinha(); linha++) {
             for (int coluna = 0; coluna < pegarTamanhoColuna(); coluna++) {
                 //Se houver valor na casa significa que a mesma faz parte da malha
-                if (malhaMatrizCasa[coluna][linha].getValor() != 0) {
+                if (malhaMatrizCasa[coluna][linha].obterValor() != 0) {
                     InterfaceCasa destino;
                     InterfaceCasa origem = malhaMatrizCasa[coluna][linha];
                     if (!MorteCasas.contains(origem)) {
-                        switch (malhaMatrizCasa[coluna][linha].getValor()) {
+                        switch (malhaMatrizCasa[coluna][linha].obterValor()) {
                             case 1 -> {
                                 destino = malhaMatrizCasa[coluna][linha - 1];
                                 if (verificarCruzamento(destino)) {
                                     definirCaminhoCruz(origem);
                                 } else {
-                                    origem.addRota(new MovimentacaoUmaCasa(origem, destino));
+                                    origem.adicionarCaminho(new MovimentacaoUmaCasa(origem, destino));
                                 }
                             }
                             case 2 -> {
@@ -180,7 +180,7 @@ public class ControleArquivoMalha {
                                 if (verificarCruzamento(destino)) {
                                     definirCaminhoCruz(origem);
                                 } else {
-                                    origem.addRota(new MovimentacaoUmaCasa(origem, destino));
+                                    origem.adicionarCaminho(new MovimentacaoUmaCasa(origem, destino));
                                 }
                             }
                             case 3 -> {
@@ -188,7 +188,7 @@ public class ControleArquivoMalha {
                                 if (verificarCruzamento(destino)) {
                                     definirCaminhoCruz(origem);
                                 } else {
-                                    origem.addRota(new MovimentacaoUmaCasa(origem, destino));
+                                    origem.adicionarCaminho(new MovimentacaoUmaCasa(origem, destino));
                                 }
                             }
                             case 4 -> {
@@ -196,10 +196,10 @@ public class ControleArquivoMalha {
                                 if (verificarCruzamento(destino)) {
                                     definirCaminhoCruz(origem);
                                 } else {
-                                    origem.addRota(new MovimentacaoUmaCasa(origem, destino));
+                                    origem.adicionarCaminho(new MovimentacaoUmaCasa(origem, destino));
                                 }
                             }
-                            default -> origem.addRota(new DesativarCarro(origem));
+                            default -> origem.adicionarCaminho(new DesativarCarro(origem));
                         }
                     }
                 }
@@ -208,7 +208,7 @@ public class ControleArquivoMalha {
     }
 
     public boolean verificarCruzamento(InterfaceCasa casa) {
-        int valor = casa.getValor();
+        int valor = casa.obterValor();
         return !(valor == 1 || valor == 2 || valor == 3 || valor == 4);
     }
 
@@ -255,73 +255,73 @@ public class ControleArquivoMalha {
         //Entrada 1
         //Entrada 2
         //Entrada 3
-        switch (origem.getValor()) {
+        switch (origem.obterValor()) {
             case 1 -> {
-                Movimento1 = malhaMatrizCasa[origem.getColunm()][origem.getRow() - 1];
-                Movimento2 = malhaMatrizCasa[origem.getColunm()][origem.getRow() - 2];
-                Movimento3 = malhaMatrizCasa[origem.getColunm() - 1][origem.getRow() - 2];
-                saida1 = malhaMatrizCasa[origem.getColunm() + 1][origem.getRow() - 1];
+                Movimento1 = malhaMatrizCasa[origem.obterColuna()][origem.obterLinha() - 1];
+                Movimento2 = malhaMatrizCasa[origem.obterColuna()][origem.obterLinha() - 2];
+                Movimento3 = malhaMatrizCasa[origem.obterColuna() - 1][origem.obterLinha() - 2];
+                saida1 = malhaMatrizCasa[origem.obterColuna() + 1][origem.obterLinha() - 1];
                 if (verificarCasaValida(saida1)) {
-                    origem.addRota(new MovimentacaoCasa(origem, saida1, Arrays.asList(Movimento1, saida1)));
+                    origem.adicionarCaminho(new MovimentacaoCasa(origem, saida1, Arrays.asList(Movimento1, saida1)));
                 }
-                saida2 = malhaMatrizCasa[origem.getColunm()][origem.getRow() - 3];
+                saida2 = malhaMatrizCasa[origem.obterColuna()][origem.obterLinha() - 3];
                 if (verificarCasaValida(saida2)) {
-                    origem.addRota(new MovimentacaoCasa(origem, saida2, Arrays.asList(Movimento1, Movimento2, saida2)));
+                    origem.adicionarCaminho(new MovimentacaoCasa(origem, saida2, Arrays.asList(Movimento1, Movimento2, saida2)));
                 }
-                saida3 = malhaMatrizCasa[origem.getColunm() - 2][origem.getRow() - 2];
+                saida3 = malhaMatrizCasa[origem.obterColuna() - 2][origem.obterLinha() - 2];
                 if (verificarCasaValida(saida3)) {
-                    origem.addRota(new MovimentacaoCasa(origem, saida3, Arrays.asList(Movimento1, Movimento2, Movimento3, saida3)));
+                    origem.adicionarCaminho(new MovimentacaoCasa(origem, saida3, Arrays.asList(Movimento1, Movimento2, Movimento3, saida3)));
                 }
             }
             case 2 -> {
-                Movimento1 = malhaMatrizCasa[origem.getColunm() + 1][origem.getRow()];
-                Movimento2 = malhaMatrizCasa[origem.getColunm() + 2][origem.getRow()];
-                Movimento3 = malhaMatrizCasa[origem.getColunm() + 2][origem.getRow() - 1];
-                saida1 = malhaMatrizCasa[origem.getColunm() + 1][origem.getRow() + 1];
+                Movimento1 = malhaMatrizCasa[origem.obterColuna() + 1][origem.obterLinha()];
+                Movimento2 = malhaMatrizCasa[origem.obterColuna() + 2][origem.obterLinha()];
+                Movimento3 = malhaMatrizCasa[origem.obterColuna() + 2][origem.obterLinha() - 1];
+                saida1 = malhaMatrizCasa[origem.obterColuna() + 1][origem.obterLinha() + 1];
                 if (verificarCasaValida(saida1)) {
-                    origem.addRota(new MovimentacaoCasa(origem, saida1, Arrays.asList(Movimento1, saida1)));
+                    origem.adicionarCaminho(new MovimentacaoCasa(origem, saida1, Arrays.asList(Movimento1, saida1)));
                 }
-                saida2 = malhaMatrizCasa[origem.getColunm() + 3][origem.getRow()];
+                saida2 = malhaMatrizCasa[origem.obterColuna() + 3][origem.obterLinha()];
                 if (verificarCasaValida(saida2)) {
-                    origem.addRota(new MovimentacaoCasa(origem, saida2, Arrays.asList(Movimento1, Movimento2, saida2)));
+                    origem.adicionarCaminho(new MovimentacaoCasa(origem, saida2, Arrays.asList(Movimento1, Movimento2, saida2)));
                 }
-                saida3 = malhaMatrizCasa[origem.getColunm() + 2][origem.getRow() - 2];
+                saida3 = malhaMatrizCasa[origem.obterColuna() + 2][origem.obterLinha() - 2];
                 if (verificarCasaValida(saida3)) {
-                    origem.addRota(new MovimentacaoCasa(origem, saida3, Arrays.asList(Movimento1, Movimento2, Movimento3, saida3)));
+                    origem.adicionarCaminho(new MovimentacaoCasa(origem, saida3, Arrays.asList(Movimento1, Movimento2, Movimento3, saida3)));
                 }
             }
             case 3 -> {
-                Movimento1 = malhaMatrizCasa[origem.getColunm()][origem.getRow() + 1];
-                Movimento2 = malhaMatrizCasa[origem.getColunm()][origem.getRow() + 2];
-                Movimento3 = malhaMatrizCasa[origem.getColunm() + 1][origem.getRow() + 2];
-                saida1 = malhaMatrizCasa[origem.getColunm() - 1][origem.getRow() + 1];
+                Movimento1 = malhaMatrizCasa[origem.obterColuna()][origem.obterLinha() + 1];
+                Movimento2 = malhaMatrizCasa[origem.obterColuna()][origem.obterLinha() + 2];
+                Movimento3 = malhaMatrizCasa[origem.obterColuna() + 1][origem.obterLinha() + 2];
+                saida1 = malhaMatrizCasa[origem.obterColuna() - 1][origem.obterLinha() + 1];
                 if (verificarCasaValida(saida1)) {
-                    origem.addRota(new MovimentacaoCasa(origem, saida1, Arrays.asList(Movimento1, saida1)));
+                    origem.adicionarCaminho(new MovimentacaoCasa(origem, saida1, Arrays.asList(Movimento1, saida1)));
                 }
-                saida2 = malhaMatrizCasa[origem.getColunm()][origem.getRow() + 3];
+                saida2 = malhaMatrizCasa[origem.obterColuna()][origem.obterLinha() + 3];
                 if (verificarCasaValida(saida2)) {
-                    origem.addRota(new MovimentacaoCasa(origem, saida2, Arrays.asList(Movimento1, Movimento2, saida2)));
+                    origem.adicionarCaminho(new MovimentacaoCasa(origem, saida2, Arrays.asList(Movimento1, Movimento2, saida2)));
                 }
-                saida3 = malhaMatrizCasa[origem.getColunm() + 2][origem.getRow() + 2];
+                saida3 = malhaMatrizCasa[origem.obterColuna() + 2][origem.obterLinha() + 2];
                 if (verificarCasaValida(saida3)) {
-                    origem.addRota(new MovimentacaoCasa(origem, saida3, Arrays.asList(Movimento1, Movimento2, Movimento3, saida3)));
+                    origem.adicionarCaminho(new MovimentacaoCasa(origem, saida3, Arrays.asList(Movimento1, Movimento2, Movimento3, saida3)));
                 }
             }
             case 4 -> {
-                Movimento1 = malhaMatrizCasa[origem.getColunm() - 1][origem.getRow()];
-                Movimento2 = malhaMatrizCasa[origem.getColunm() - 2][origem.getRow()];
-                Movimento3 = malhaMatrizCasa[origem.getColunm() - 2][origem.getRow() + 1];
-                saida1 = malhaMatrizCasa[origem.getColunm() - 1][origem.getRow() - 1];
+                Movimento1 = malhaMatrizCasa[origem.obterColuna() - 1][origem.obterLinha()];
+                Movimento2 = malhaMatrizCasa[origem.obterColuna() - 2][origem.obterLinha()];
+                Movimento3 = malhaMatrizCasa[origem.obterColuna() - 2][origem.obterLinha() + 1];
+                saida1 = malhaMatrizCasa[origem.obterColuna() - 1][origem.obterLinha() - 1];
                 if (verificarCasaValida(saida1)) {
-                    origem.addRota(new MovimentacaoCasa(origem, saida1, Arrays.asList(Movimento1, saida1)));
+                    origem.adicionarCaminho(new MovimentacaoCasa(origem, saida1, Arrays.asList(Movimento1, saida1)));
                 }
-                saida2 = malhaMatrizCasa[origem.getColunm() - 3][origem.getRow()];
+                saida2 = malhaMatrizCasa[origem.obterColuna() - 3][origem.obterLinha()];
                 if (verificarCasaValida(saida2)) {
-                    origem.addRota(new MovimentacaoCasa(origem, saida2, Arrays.asList(Movimento1, Movimento2, saida2)));
+                    origem.adicionarCaminho(new MovimentacaoCasa(origem, saida2, Arrays.asList(Movimento1, Movimento2, saida2)));
                 }
-                saida3 = malhaMatrizCasa[origem.getColunm() - 2][origem.getRow() + 2];
+                saida3 = malhaMatrizCasa[origem.obterColuna() - 2][origem.obterLinha() + 2];
                 if (verificarCasaValida(saida3)) {
-                    origem.addRota(new MovimentacaoCasa(origem, saida3, Arrays.asList(Movimento1, Movimento2, Movimento3, saida3)));
+                    origem.adicionarCaminho(new MovimentacaoCasa(origem, saida3, Arrays.asList(Movimento1, Movimento2, Movimento3, saida3)));
                 }
             }
 
@@ -329,6 +329,6 @@ public class ControleArquivoMalha {
     }
 
     public boolean verificarCasaValida(InterfaceCasa casa) {
-        return casa.getValor() != 0;
+        return casa.obterValor() != 0;
     }
 }

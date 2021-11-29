@@ -96,8 +96,8 @@ public class Controle {
     private void novoCarroMalha() {
         Carro carro = new Carro();
         qtdCarrosEsperando.put(carro.getId(), carro);
-        tabelaObservadoresMalha.forEach((observer) -> observer.createCarro(carro.getId(), carro.getRBG(), -1, -1));
-        carro.enterSimulation(controleMalha.getRespawnAleatorio());
+        tabelaObservadoresMalha.forEach((observer) -> observer.createCarro(carro.getId(), carro.getCores(), -1, -1));
+        carro.inserirSimulacao(controleMalha.getRespawnAleatorio());
     }
 
     public void malhaNotificacaoEntrada(InterfaceCarro carro) {

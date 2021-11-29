@@ -18,8 +18,8 @@ public class MovimentacaoUmaCasa implements Movimentacao {
 
     @Override
     public void executar() {
-        destino.mover(origem.getCarro());
-        origem.setCarro(null);
+        destino.movimentar(origem.obterCarro());
+        origem.definirCarro(null);
         origem.liberarRecurso();
     }
 
