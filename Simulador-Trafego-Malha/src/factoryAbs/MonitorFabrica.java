@@ -11,7 +11,7 @@ public class MonitorFabrica implements FabricaAbstrata{
 
 
     @Override
-    public InterfaceCasa createCasa(int valor, int column, int row) {
+    public InterfaceCasa construirCasa(int valor, int column, int row) {
 
         return new MonitoresCasas(valor,column,row);
     }

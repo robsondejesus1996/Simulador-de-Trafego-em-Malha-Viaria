@@ -10,7 +10,7 @@ import modelo.SemaforosCasas;
 public class SemaforoFabrica implements FabricaAbstrata {
 
     @Override
-    public Casa createCasa(int valor, int column, int row) {
+    public Casa construirCasa(int valor, int column, int row) {
 
         return new SemaforosCasas(valor, column, row);
     }

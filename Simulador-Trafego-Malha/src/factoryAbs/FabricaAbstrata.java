@@ -8,5 +8,5 @@ import modelo.InterfaceCasa;
  */
 public interface FabricaAbstrata {
 
-    public InterfaceCasa createCasa(int valor, int colunm, int row);
+    public InterfaceCasa construirCasa(int valor, int colunm, int row);
 }

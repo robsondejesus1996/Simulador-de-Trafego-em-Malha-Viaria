@@ -66,7 +66,7 @@ public class ControleArquivoMalha {
         FabricaAbstrata factory = Controle.getInstance().obterFabrica();
         for (int row = 0; row < malhaMatriz[0].length; row++) {
             for (int coluna = 0; coluna < malhaMatriz.length; coluna++) {
-                malhaMatrizCasa[coluna][row] = factory.createCasa(malhaMatriz[coluna][row], coluna, row);
+                malhaMatrizCasa[coluna][row] = factory.construirCasa(malhaMatriz[coluna][row], coluna, row);
                 int valor = malhaMatrizCasa[coluna][row].getValor();
                 if (valor == 1 || valor == 2 || valor == 3 || valor == 4) {
                     qtdCasasValidas++;
