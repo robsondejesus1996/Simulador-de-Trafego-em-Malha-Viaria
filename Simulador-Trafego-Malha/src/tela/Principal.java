@@ -28,28 +28,28 @@ import javax.swing.WindowConstants;
 public class Principal extends JFrame implements FramePrincipalObserver {
 
     private static Dimension sizePrefesss = new Dimension(800, 800);
-    private JPanel jpConfig;
-    private JPanel jpTable;
-    private JButton btnStop;
-    private JButton btnStart;
+    private JPanel painelConfiguracao;
+    private JPanel painelTabela;
+    private JButton botaoPara;
+    private JButton botaoIniciar;
 
-    private JButton btnCarregarNovaMatriz;
-    private JSpinner jsNumCarro;
-    private JLabel lbLimiteCarro;
-    private JLabel lbNumCarrosSimulacao;
-    private Controle controller;
+    private JButton botaoNovaMalha;
+    private JSpinner qtdCarros;
+    private JLabel labelLimiteQtdCarros;
+    private JLabel labelQtdAtualSimulacaoCarros;
+    private Controle controle;
     private GridBagConstraints cons;
-    private TabelaMalha table;
+    private TabelaMalha tabela;
 
     public Principal() {
-        controller = Controle.getInstance();
-        initFrameProperty();
-        initComponnnets();
-        initListeners();
-        controller.adicionarObservadoresTela(this);
+        controle = Controle.getInstance();
+        inicializarPropriedades();
+        inicializarComponentes();
+        inicializarListeners();
+        controle.adicionarObservadoresTela(this);
     }
 
-    private void initFrameProperty() {
+    private void inicializarPropriedades() {
         this.setSize(sizePrefesss);
         this.setMinimumSize(sizePrefesss);
         this.setLocationRelativeTo(null);
@@ -58,7 +58,7 @@ public class Principal extends JFrame implements FramePrincipalObserver {
         this.getContentPane().setLayout(new BorderLayout(1, 2));
     }
 
-    private void initComponnnets() {
+    private void inicializarComponentes() {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -71,31 +71,31 @@ public class Principal extends JFrame implements FramePrincipalObserver {
         }
         Dimension size;
         Container contentPane = this.getContentPane();
-        this.jpConfig = new JPanel();
-        this.jpTable = new JPanel();
+        this.painelConfiguracao = new JPanel();
+        this.painelTabela = new JPanel();
 
         size = new Dimension(0, 150);
-        setSizeI(jpConfig, size);
-        this.jpConfig.setMaximumSize(size);
+        definirTamalho(painelConfiguracao, size);
+        this.painelConfiguracao.setMaximumSize(size);
 
-        initConfigComponets();
+        inicializarConfiguracoesComponentes();
 
-        contentPane.add(jpConfig, BorderLayout.NORTH);
-        contentPane.add(jpTable, BorderLayout.CENTER);
+        contentPane.add(painelConfiguracao, BorderLayout.NORTH);
+        contentPane.add(painelTabela, BorderLayout.CENTER);
 
-        jpConfig.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0)));
-        this.jpTable.setBackground(new Color(0, 0, 0));
+        painelConfiguracao.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0)));
+        this.painelTabela.setBackground(new Color(0, 0, 0));
     }
 
-    private void initConfigComponets() {
+    private void inicializarConfiguracoesComponentes() {
         Dimension size;
         size = new Dimension(700, 140);
         JPanel jPConfingII = new JPanel();
-        setSizeI(jPConfingII, size);
+        definirTamalho(jPConfingII, size);
         jPConfingII.setMaximumSize(size);
         jPConfingII.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0)));
 
-        this.jpConfig.add(jPConfingII);
+        this.painelConfiguracao.add(jPConfingII);
         jPConfingII.setLayout(new GridBagLayout());
         cons = new GridBagConstraints();
 
@@ -107,11 +107,11 @@ public class Principal extends JFrame implements FramePrincipalObserver {
         cons.fill = GridBagConstraints.HORIZONTAL;
         jPConfingII.add(jpConfingIII, cons);
 
-        this.btnStop = new JButton("Aguardar e Encerrar");
-        this.btnStart = new JButton("Iniciar");
-        this.jsNumCarro = new JSpinner();
-        jsNumCarro.setModel(new SpinnerNumberModel(1, 1, controller.obterControleMalha().obterQuantidadeCasasValida(), 1));
-        this.lbLimiteCarro = new JLabel("Informe a quantidade de carros: ");
+        this.botaoPara = new JButton("Aguardar e Encerrar");
+        this.botaoIniciar = new JButton("Iniciar");
+        this.qtdCarros = new JSpinner();
+        qtdCarros.setModel(new SpinnerNumberModel(1, 1, controle.obterControleMalha().obterQuantidadeCasasValida(), 1));
+        this.labelLimiteQtdCarros = new JLabel("Informe a quantidade de carros: ");
 
         Insets insets = new Insets(0, 10, 0, 10);
 
@@ -120,7 +120,7 @@ public class Principal extends JFrame implements FramePrincipalObserver {
         cons.gridy = 0;
         cons.fill = GridBagConstraints.HORIZONTAL;
         cons.insets = insets;
-        jpConfingIII.add(this.lbLimiteCarro, cons);
+        jpConfingIII.add(this.labelLimiteQtdCarros, cons);
         jpConfingIII.setBorder(BorderFactory.createLineBorder(new Color(102, 102, 0)));
 
         cons = new GridBagConstraints();
@@ -128,7 +128,7 @@ public class Principal extends JFrame implements FramePrincipalObserver {
         cons.gridy = 1;
         cons.fill = GridBagConstraints.HORIZONTAL;
         cons.insets = insets;
-        jpConfingIII.add(this.jsNumCarro, cons);
+        jpConfingIII.add(this.qtdCarros, cons);
 
         cons = new GridBagConstraints();
         cons.gridx = 1;
@@ -136,7 +136,7 @@ public class Principal extends JFrame implements FramePrincipalObserver {
         cons.ipadx = 25;
         cons.fill = GridBagConstraints.HORIZONTAL;
         cons.insets = insets;
-        jpConfingIII.add(this.btnStart, cons);
+        jpConfingIII.add(this.botaoIniciar, cons);
 
         cons = new GridBagConstraints();
         cons.gridx = 1;
@@ -144,8 +144,8 @@ public class Principal extends JFrame implements FramePrincipalObserver {
         cons.ipadx = 25;
         cons.fill = GridBagConstraints.HORIZONTAL;
         cons.insets = insets;
-        this.btnStop.setEnabled(false);
-        jpConfingIII.add(this.btnStop, cons);
+        this.botaoPara.setEnabled(false);
+        jpConfingIII.add(this.botaoPara, cons);
 
         cons = new GridBagConstraints();
         cons.gridx = 0;
@@ -154,8 +154,8 @@ public class Principal extends JFrame implements FramePrincipalObserver {
         cons.gridwidth = 1;
         cons.fill = GridBagConstraints.HORIZONTAL;
         cons.insets = insets;
-        btnCarregarNovaMatriz = new JButton("Importar nova malha");
-        jpConfingIII.add(btnCarregarNovaMatriz, cons);
+        botaoNovaMalha = new JButton("Importar nova malha");
+        jpConfingIII.add(botaoNovaMalha, cons);
 
         cons = new GridBagConstraints();
         cons.gridx = 0;
@@ -170,12 +170,12 @@ public class Principal extends JFrame implements FramePrincipalObserver {
         cons.gridy = 3;
         cons.gridwidth = 3;
         cons.fill = GridBagConstraints.NONE;
-        lbNumCarrosSimulacao = new JLabel("   ");
-        jPConfingII.add(lbNumCarrosSimulacao, cons);
-        initTableFrame();
+        labelQtdAtualSimulacaoCarros = new JLabel("   ");
+        jPConfingII.add(labelQtdAtualSimulacaoCarros, cons);
+        inicializarTabela();
     }
 
-    private void setSizeI(JComponent c, Dimension d) {
+    private void definirTamalho(JComponent c, Dimension d) {
         c.setSize(d);
         c.setMinimumSize(d);
         c.setPreferredSize(d);
@@ -183,22 +183,22 @@ public class Principal extends JFrame implements FramePrincipalObserver {
 
     @Override
     public void notificarQtdCarros(int numCarro) {
-        lbNumCarrosSimulacao.setText("" + numCarro);
+        labelQtdAtualSimulacaoCarros.setText("" + numCarro);
     }
 
-    private void initListeners() {
-        this.btnStart.addActionListener((e) -> btnStartListeners());
-        this.btnStop.addActionListener((e) -> btnStopListeners());
-        this.btnCarregarNovaMatriz.addActionListener((e) -> btnCarregarNovaMatrizListeners());
+    private void inicializarListeners() {
+        this.botaoIniciar.addActionListener((e) -> botaoIniciarListeners());
+        this.botaoPara.addActionListener((e) -> botaopararListeners());
+        this.botaoNovaMalha.addActionListener((e) -> botaoNovaMalhaListeners());
     }
 
-    public void initTableFrame() {
-        jpTable.removeAll();
-        jsNumCarro.setModel(new SpinnerNumberModel(1, 1, controller.obterControleMalha().obterQuantidadeCasasValida(), 1));
-        jpTable.setLayout(new BoxLayout(jpTable, BoxLayout.PAGE_AXIS));
-        table = new TabelaMalha(jpTable);
+    public void inicializarTabela() {
+        painelTabela.removeAll();
+        qtdCarros.setModel(new SpinnerNumberModel(1, 1, controle.obterControleMalha().obterQuantidadeCasasValida(), 1));
+        painelTabela.setLayout(new BoxLayout(painelTabela, BoxLayout.PAGE_AXIS));
+        tabela = new TabelaMalha(painelTabela);
         JScrollPane pane = new JScrollPane();
-        pane.setViewportView(table);
+        pane.setViewportView(tabela);
         pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         pane.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
@@ -207,34 +207,34 @@ public class Principal extends JFrame implements FramePrincipalObserver {
         pane.getViewport().setOpaque(true);
         pane.setViewportBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         pane.getViewport().setBackground(new Color(0, 0, 0, 0));
-        jpTable.add(pane);
-        jpTable.repaint();
-        jpTable.revalidate();
+        painelTabela.add(pane);
+        painelTabela.repaint();
+        painelTabela.revalidate();
     }
 
     @Override
     public void notificarFinalizacao() {
-        btnCarregarNovaMatriz.setEnabled(true);
-        btnStart.setEnabled(true);
-        jsNumCarro.setEnabled(true);
+        botaoNovaMalha.setEnabled(true);
+        botaoIniciar.setEnabled(true);
+        qtdCarros.setEnabled(true);
     }
 
-    private void btnStopListeners() {
-        btnStop.setEnabled(false);
-        controller.stopReaparecimento();
+    private void botaopararListeners() {
+        botaoPara.setEnabled(false);
+        controle.stopReaparecimento();
     }
 
-    private void btnStartListeners() {
-        jsNumCarro.setEnabled(false);
-        btnStart.setEnabled(false);
-        btnStop.setEnabled(true);
-        btnCarregarNovaMatriz.setEnabled(false);
+    private void botaoIniciarListeners() {
+        qtdCarros.setEnabled(false);
+        botaoIniciar.setEnabled(false);
+        botaoPara.setEnabled(true);
+        botaoNovaMalha.setEnabled(false);
 
-        int numeroCarro = (int) jsNumCarro.getValue();
-        controller.iniciarSimulacao(numeroCarro);
+        int numeroCarro = (int) qtdCarros.getValue();
+        controle.iniciarSimulacao(numeroCarro);
     }
 
-    private void btnCarregarNovaMatrizListeners() {
+    private void botaoNovaMalhaListeners() {
         EventQueue.invokeLater(() -> new Configuracoes(this).setVisible(true));
     }
 

@@ -20,19 +20,19 @@ import java.util.List;
  */
 public class TabelaMalha extends JTable implements ObservadorTabela {
 
-    private ControleArquivoMalha controller;
-    private JPanel parentPanel;
-    private BufferedImage[][] orginalMalhaImages;
-    private BufferedImage[][] canvas;
+    private ControleArquivoMalha controle;
+    private JPanel painel;
+    private BufferedImage[][] malhaOriginalImagem;
+    private BufferedImage[][] tela;
     private Map<Long, CarroMalha> sprites;
 
     public TabelaMalha(JPanel parent) {
-        this.controller = Controle.getInstance().obterControleMalha();
-        this.controller.anexarObservadores(this);
+        this.controle = Controle.getInstance().obterControleMalha();
+        this.controle.anexarObservadores(this);
         Controle.getInstance().adicionarTabelaObservadores(this);
-        this.parentPanel = parent;
+        this.painel = parent;
         this.sprites = new HashMap<>();
-        startBuffert();
+        iniciarBuffert();
 
         new Thread(() -> {
             // Game Loop: Nystrom, 2014
@@ -46,7 +46,7 @@ public class TabelaMalha extends JTable implements ObservadorTabela {
                 if (now - last > MS_PER_FRAME) {
                     last = now;
 
-                    paint();
+                    printar();
 
                 }
 
@@ -54,14 +54,14 @@ public class TabelaMalha extends JTable implements ObservadorTabela {
         }).start();
     }
 
-    public void startBuffert() {
-        this.orginalMalhaImages = new BufferedImage[controller.pegarTamanhoColuna()][controller.pegarTamanhoLinha()];
-        this.canvas = new BufferedImage[controller.pegarTamanhoColuna()][controller.pegarTamanhoLinha()];
-        this.initializeProperties();
-        initImages();
+    public void iniciarBuffert() {
+        this.malhaOriginalImagem = new BufferedImage[controle.pegarTamanhoColuna()][controle.pegarTamanhoLinha()];
+        this.tela = new BufferedImage[controle.pegarTamanhoColuna()][controle.pegarTamanhoLinha()];
+        this.inicializacaoPropriedades();
+        inicializarImagens();
 
-        parentPanel.repaint();
-        parentPanel.revalidate();
+        painel.repaint();
+        painel.revalidate();
         this.repaint();
         this.revalidate();
     }
@@ -69,7 +69,7 @@ public class TabelaMalha extends JTable implements ObservadorTabela {
     /**
      * Inicializa as propriedades da tabela.
      */
-    private void initializeProperties() {
+    private void inicializacaoPropriedades() {
         this.setModel(new ManhaTableModel());
         this.setDefaultRenderer(Object.class, new BoardTableRenderer());
         this.setBackground(new Color(0, 0, 0, 0));
@@ -84,11 +84,11 @@ public class TabelaMalha extends JTable implements ObservadorTabela {
         this.setEnabled(false);
     }
 
-    private void initImages() {
-        for (int column = 0; column < controller.pegarTamanhoColuna(); column++) {
-            for (int row = 0; row < controller.pegarTamanhoLinha(); row++) {
-                orginalMalhaImages[column][row] = MapaImagens.obterImagem((int) controller.getCasaValue(column, row));
-                canvas[column][row] = MapaImagens.obterImagem((int) controller.getCasaValue(column, row));
+    private void inicializarImagens() {
+        for (int column = 0; column < controle.pegarTamanhoColuna(); column++) {
+            for (int row = 0; row < controle.pegarTamanhoLinha(); row++) {
+                malhaOriginalImagem[column][row] = MapaImagens.obterImagem((int) controle.getCasaValue(column, row));
+                tela[column][row] = MapaImagens.obterImagem((int) controle.getCasaValue(column, row));
             }
         }
         this.repaint();
@@ -97,7 +97,7 @@ public class TabelaMalha extends JTable implements ObservadorTabela {
 
     @Override
     public Dimension getPreferredScrollableViewportSize() {
-        Dimension size = parentPanel.getSize();
+        Dimension size = painel.getSize();
         if (size.getWidth() <= 0 || size.getHeight() <= 0) {
             return new Dimension(0, 0);
         }
@@ -135,33 +135,33 @@ public class TabelaMalha extends JTable implements ObservadorTabela {
         this.sprites.remove(id);
     }
 
-    public void paint() {
-        int width = canvas[0][0].getWidth();
-        int height = canvas[0][0].getHeight();
-        int type = canvas[0][0].getType();
+    public void printar() {
+        int width = tela[0][0].getWidth();
+        int height = tela[0][0].getHeight();
+        int type = tela[0][0].getType();
 
-        for (int column = 0; column < controller.pegarTamanhoColuna(); column++) {
-            for (int row = 0; row < controller.pegarTamanhoLinha(); row++) {
+        for (int column = 0; column < controle.pegarTamanhoColuna(); column++) {
+            for (int row = 0; row < controle.pegarTamanhoLinha(); row++) {
                 BufferedImage bi = new BufferedImage(width, height, type);
                 Graphics2D g = bi.createGraphics();
-                g.drawImage(orginalMalhaImages[column][row], 0, 0, null);
+                g.drawImage(malhaOriginalImagem[column][row], 0, 0, null);
                 g.dispose();
 
-                this.canvas[column][row] = bi;
+                this.tela[column][row] = bi;
             }
         }
 
         List<CarroMalha> sprintesSeguret = new ArrayList<>(this.sprites.values());
         sprintesSeguret.forEach((sprite) -> {
             if (sprite.obterColuna() != -1 && sprite.obterLinha() != -1) {
-                Graphics2D g = this.canvas[sprite.obterColuna()][sprite.obterLinha()].createGraphics();
+                Graphics2D g = this.tela[sprite.obterColuna()][sprite.obterLinha()].createGraphics();
                 sprite.draw(g);
                 g.dispose();
             }
         });
 
         this.repaint();
-        parentPanel.repaint();
+        painel.repaint();
     }
 
     private static class BoardTableRenderer extends DefaultTableCellRenderer {
@@ -184,17 +184,17 @@ public class TabelaMalha extends JTable implements ObservadorTabela {
 
         @Override
         public int getColumnCount() {
-            return controller.pegarTamanhoColuna();
+            return controle.pegarTamanhoColuna();
         }
 
         @Override
         public int getRowCount() {
-            return controller.pegarTamanhoLinha();
+            return controle.pegarTamanhoLinha();
         }
 
         @Override
         public Object getValueAt(int row, int col) {
-            return canvas[col][row];
+            return tela[col][row];
         }
     }
 

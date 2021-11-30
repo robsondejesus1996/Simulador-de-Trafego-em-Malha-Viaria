@@ -10,7 +10,8 @@ import java.awt.image.BufferedImage;
 
 public class CarroMalha {
 
-    private int coluna, linha;
+    private int coluna;
+    private int linha;
     private final BufferedImage image;
 
     public CarroMalha(int color, int coluna, int linha) {

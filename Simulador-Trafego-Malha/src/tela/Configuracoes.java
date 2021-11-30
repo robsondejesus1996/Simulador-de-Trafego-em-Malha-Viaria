@@ -16,45 +16,45 @@ public class Configuracoes extends JFrame {
 
     private String caminho;
 
-    private Dimension size;
-    private JLabel lbArquivo;
-    private JLabel lbAreaCreatica;
-    private JTextField tfArquivo;
-    private JButton btnBuscarArquivo;
-    private JButton btnCreateMalha;
-    private JButton btnCancelar;
-    private JRadioButton rbMonitor;
-    private JRadioButton rbSemafaro;
+    private Dimension tamanho;
+    private JLabel labelArquivo;
+    private JLabel labelAreaCritica;
+    private JTextField textArquivo;
+    private JButton botaoBuscar;
+    private JButton botaoCriarMalha;
+    private JButton botaoCancelar;
+    private JRadioButton monitorMonitor;
+    private JRadioButton monitorSemaforo;
     private ButtonGroup radioGrupo;
     private GridBagConstraints cons;
-    private Controle controller;
-    private Principal framePrincipal;
+    private Controle controle;
+    private Principal telaPrincipal;
 
     public Configuracoes() {
-        this.controller = Controle.getInstance();
-        initFrameConfig();
-        initComponents();
-        initListeners();
+        this.controle = Controle.getInstance();
+        inicializarFrameConfiguracao();
+        inicializarComponentes();
+        inicializarListeners();
     }
 
     public Configuracoes(Principal framePrincipal) {
         this();
-        this.framePrincipal = framePrincipal;
+        this.telaPrincipal = framePrincipal;
     }
 
-    private void initFrameConfig() {
-        this.setTitle("Simulador Trafico - Config");
+    private void inicializarFrameConfiguracao() {
+        this.setTitle("Configurações do Sistema de Trafego");
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
-        size = new Dimension(525, 210);
-        this.setSize(size);
-        this.setPreferredSize(size);
-        this.setMinimumSize(size);
-        this.setMaximumSize(size);
+        tamanho = new Dimension(525, 210);
+        this.setSize(tamanho);
+        this.setPreferredSize(tamanho);
+        this.setMinimumSize(tamanho);
+        this.setMaximumSize(tamanho);
         setLocationRelativeTo(null);
     }
 
-    private void initComponents() {
+    private void inicializarComponentes() {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -65,42 +65,42 @@ public class Configuracoes extends JFrame {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             Logger.getLogger(Configuracoes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        this.lbArquivo = new JLabel("Arquivo: ");
-        this.lbAreaCreatica = new JLabel("Selecione o controler de área critica:");
-        this.tfArquivo = new JTextField();
-        this.btnBuscarArquivo = new JButton("Abrir Arquivo");
-        this.btnCancelar = new JButton("Cancelar");
-        this.btnCreateMalha = new JButton("Create Manha");
-        this.rbMonitor = new JRadioButton("Monitor");
-        this.rbSemafaro = new JRadioButton("Semafaro");
+        this.labelArquivo = new JLabel("Malha: ");
+        this.labelAreaCritica = new JLabel("Informe o tipo de controle de visualização: ");
+        this.textArquivo = new JTextField();
+        this.botaoBuscar = new JButton("Caminho");
+        this.botaoCancelar = new JButton("Cancelar");
+        this.botaoCriarMalha = new JButton("Inserir malha");
+        this.monitorMonitor = new JRadioButton("MONITOR");
+        this.monitorSemaforo = new JRadioButton("SEMAFORO");
         this.radioGrupo = new ButtonGroup();
-        radioGrupo.add(rbMonitor);
-        radioGrupo.add(rbSemafaro);
-        initPosition();
+        radioGrupo.add(monitorMonitor);
+        radioGrupo.add(monitorSemaforo);
+        inicializarPosicao();
     }
 
-    private void setSizeI(JComponent c, Dimension d) {
+    private void definirTamanho(JComponent c, Dimension d) {
         c.setSize(d);
         c.setMinimumSize(d);
         c.setPreferredSize(d);
     }
 
-    private void initPosition() {
+    private void inicializarPosicao() {
         Container contentPane = this.getContentPane();
         contentPane.setLayout(new GridBagLayout());
 
         JPanel jpArquivo = new JPanel();
         contentPane.setBackground(jpArquivo.getBackground());
-        size = new Dimension(450, 50);
-        setSizeI(jpArquivo, size);
-        jpArquivo.setMaximumSize(size);
+        tamanho = new Dimension(450, 50);
+        definirTamanho(jpArquivo, tamanho);
+        jpArquivo.setMaximumSize(tamanho);
         jpArquivo.setBackground(this.getBackground());
-        jpArquivo.add(lbArquivo);
-        size = new Dimension(250, 24);
-        setSizeI(tfArquivo, size);
-        tfArquivo.setEditable(false);
-        jpArquivo.add(tfArquivo);
-        jpArquivo.add(btnBuscarArquivo);
+        jpArquivo.add(labelArquivo);
+        tamanho = new Dimension(250, 24);
+        definirTamanho(textArquivo, tamanho);
+        textArquivo.setEditable(false);
+        jpArquivo.add(textArquivo);
+        jpArquivo.add(botaoBuscar);
 
         cons = new GridBagConstraints();
         cons.insets = new Insets(-10, 0, 0, 0);
@@ -111,27 +111,27 @@ public class Configuracoes extends JFrame {
         cons.gridx = 0;
         cons.gridy = 1;
         cons.gridwidth = 2;
-        p.add(lbAreaCreatica, cons);
+        p.add(labelAreaCritica, cons);
 
         cons = new GridBagConstraints();
         cons.gridx = 0;
         cons.gridy = 2;
-        p.add(rbMonitor, cons);
+        p.add(monitorMonitor, cons);
 
         cons = new GridBagConstraints();
         cons.gridx = 1;
         cons.gridy = 2;
-        p.add(rbSemafaro, cons);
+        p.add(monitorSemaforo, cons);
 
         cons = new GridBagConstraints();
         cons.gridx = 0;
         cons.gridy = 3;
-        p.add(btnCreateMalha, cons);
+        p.add(botaoCriarMalha, cons);
 
         cons = new GridBagConstraints();
         cons.gridx = 1;
         cons.gridy = 3;
-        p.add(btnCancelar, cons);
+        p.add(botaoCancelar, cons);
 
         cons = new GridBagConstraints();
         cons.gridy = 1;
@@ -140,13 +140,13 @@ public class Configuracoes extends JFrame {
         contentPane.add(p, cons);
     }
 
-    private void initListeners() {
-        btnBuscarArquivo.addActionListener((e) -> btnAbrirListeners());
-        btnCancelar.addActionListener((e) -> btnCancelarListeners());
-        btnCreateMalha.addActionListener((e) -> btnCreateListeners());
+    private void inicializarListeners() {
+        botaoBuscar.addActionListener((e) -> botaoAbrirListeners());
+        botaoCancelar.addActionListener((e) -> botaoCancelarListeners());
+        botaoCriarMalha.addActionListener((e) -> botaoCriarListeners());
     }
 
-    private void btnAbrirListeners() {
+    private void botaoAbrirListeners() {
         JFileChooser fileChooser = new JFileChooser(System.getProperty("user.dir"));
         FileFilter fileFilter = new FileNameExtensionFilter("txt", "txt");
         fileChooser.setFileFilter(fileFilter);
@@ -154,20 +154,20 @@ public class Configuracoes extends JFrame {
         if (retorno == JFileChooser.APPROVE_OPTION) {
             String absolutePath = fileChooser.getSelectedFile().getAbsolutePath();
             try {
-                controller.carregarArquivo(absolutePath);
+                controle.carregarArquivo(absolutePath);
 
                 caminho = absolutePath;
-                tfArquivo.setText(caminho);
+                textArquivo.setText(caminho);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage());
             }
         }
     }
 
-    private void btnCancelarListeners() {
+    private void botaoCancelarListeners() {
     }
 
-    private void btnCreateListeners() {
+    private void botaoCriarListeners() {
         if (caminho == null || caminho.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Arquivo de Malha Não Informado");
             return;
@@ -177,17 +177,17 @@ public class Configuracoes extends JFrame {
             return;
         }
 
-        if (rbMonitor.isSelected()) {
-            controller.definirFabrica("Monitor");
-        } else if (rbSemafaro.isSelected()) {
-            controller.definirFabrica("Semafaro");
+        if (monitorMonitor.isSelected()) {
+            controle.definirFabrica("Monitor");
+        } else if (monitorSemaforo.isSelected()) {
+            controle.definirFabrica("Semafaro");
         }
 
-        controller.obterControleMalha().iniciarMalha();
+        controle.obterControleMalha().iniciarMalha();
 
-        if (framePrincipal != null) {
-            controller.redefinirMalhaObservadores();
-            framePrincipal.initTableFrame();
+        if (telaPrincipal != null) {
+            controle.redefinirMalhaObservadores();
+            telaPrincipal.inicializarTabela();
         } else {
             EventQueue.invokeLater(() -> new Principal().setVisible(true));
         }
