@@ -96,21 +96,21 @@ public class Controle {
     private void novoCarroMalha() {
         Carro carro = new Carro();
         qtdCarrosEsperando.put(carro.getId(), carro);
-        tabelaObservadoresMalha.forEach((observer) -> observer.createCarro(carro.getId(), carro.getCores(), -1, -1));
+        tabelaObservadoresMalha.forEach((observer) -> observer.inserirCarro(carro.getId(), carro.getCores(), -1, -1));
         carro.inserirSimulacao(controleMalha.getRespawnAleatorio());
     }
 
     public void malhaNotificacaoEntrada(InterfaceCarro carro) {
         qtdCarrosEsperando.remove(carro.getId());
         qtdCarrosMalha.put(carro.getId(), carro);
-        SwingUtilities.invokeLater(() -> observadoresTela.forEach((observer) -> observer.notificarNumeroDeCarro(qtdCarrosMalha.size())
+        SwingUtilities.invokeLater(() -> observadoresTela.forEach((observer) -> observer.notificarQtdCarros(qtdCarrosMalha.size())
         ));
     }
 
     public void carroDesativarNotivacacao(InterfaceCarro carro) { // notificar carro morto 
-        tabelaObservadoresMalha.forEach((observer) -> observer.removeCarro(carro.getId()));
+        tabelaObservadoresMalha.forEach((observer) -> observer.excluirCarro(carro.getId()));
         qtdCarrosMalha.remove(carro.getId());
-        SwingUtilities.invokeLater(() -> observadoresTela.forEach((observer) -> observer.notificarNumeroDeCarro(qtdCarrosMalha.size())));
+        SwingUtilities.invokeLater(() -> observadoresTela.forEach((observer) -> observer.notificarQtdCarros(qtdCarrosMalha.size())));
     }
 
     public void adicionarObservadoresTela(FramePrincipalObserver observer) {
@@ -146,7 +146,7 @@ public class Controle {
             }
         });
 
-        observadoresTela.forEach(FramePrincipalObserver::notificarSimulacaoFinalizada);
+        observadoresTela.forEach(FramePrincipalObserver::notificarFinalizacao);
     }
 
     public void stopReaparecimento() {

@@ -12,7 +12,7 @@ import java.util.logging.Logger;
  *
  * @author Robson de Jesus
  */
-public class FrameConfig extends JFrame {
+public class Configuracoes extends JFrame {
 
     private String caminho;
 
@@ -28,16 +28,16 @@ public class FrameConfig extends JFrame {
     private ButtonGroup radioGrupo;
     private GridBagConstraints cons;
     private Controle controller;
-    private FramePrincipal framePrincipal;
+    private Principal framePrincipal;
 
-    public FrameConfig() {
+    public Configuracoes() {
         this.controller = Controle.getInstance();
         initFrameConfig();
         initComponents();
         initListeners();
     }
 
-    public FrameConfig(FramePrincipal framePrincipal) {
+    public Configuracoes(Principal framePrincipal) {
         this();
         this.framePrincipal = framePrincipal;
     }
@@ -63,7 +63,7 @@ public class FrameConfig extends JFrame {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(FrameConfig.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            Logger.getLogger(Configuracoes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         this.lbArquivo = new JLabel("Arquivo: ");
         this.lbAreaCreatica = new JLabel("Selecione o controler de área critica:");
@@ -189,7 +189,7 @@ public class FrameConfig extends JFrame {
             controller.redefinirMalhaObservadores();
             framePrincipal.initTableFrame();
         } else {
-            EventQueue.invokeLater(() -> new FramePrincipal().setVisible(true));
+            EventQueue.invokeLater(() -> new Principal().setVisible(true));
         }
         this.dispose();
     }

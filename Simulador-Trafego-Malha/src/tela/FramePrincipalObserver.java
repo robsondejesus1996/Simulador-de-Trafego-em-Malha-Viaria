@@ -6,8 +6,8 @@ package tela;
  */
 public interface FramePrincipalObserver {
 
-    void notificarNumeroDeCarro(int numCarro);
+    void notificarQtdCarros(int numCarro);//notificação de quantidade de carros 
 
-    void notificarSimulacaoFinalizada();
+    void notificarFinalizacao(); // notificação de finalização de simulação
 
 }

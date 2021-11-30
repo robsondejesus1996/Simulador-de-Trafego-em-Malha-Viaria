@@ -225,11 +225,11 @@ public class ControleArquivoMalha {
     }
 
     public void movimentarCarro(long id, int colunm, int row) {
-        observadores.forEach((observer) -> observer.moveCarro(id, colunm, row));
+        observadores.forEach((observer) -> observer.movimentarCarro(id, colunm, row));
     }
 
     public void excluirCarroObservadores(long id) {
-        observadores.forEach((observer) -> observer.removeCarro(id));
+        observadores.forEach((observer) -> observer.excluirCarro(id));
     }
 
     private void definirCaminhoCruz(InterfaceCasa origem) {

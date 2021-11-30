@@ -25,7 +25,7 @@ import javax.swing.WindowConstants;
  *
  * @author Robson de Jesus
  */
-public class FramePrincipal extends JFrame implements FramePrincipalObserver {
+public class Principal extends JFrame implements FramePrincipalObserver {
 
     private static Dimension sizePrefesss = new Dimension(800, 800);
     private JPanel jpConfig;
@@ -41,7 +41,7 @@ public class FramePrincipal extends JFrame implements FramePrincipalObserver {
     private GridBagConstraints cons;
     private TabelaMalha table;
 
-    public FramePrincipal() {
+    public Principal() {
         controller = Controle.getInstance();
         initFrameProperty();
         initComponnnets();
@@ -67,7 +67,7 @@ public class FramePrincipal extends JFrame implements FramePrincipalObserver {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FramePrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         Dimension size;
         Container contentPane = this.getContentPane();
@@ -182,7 +182,7 @@ public class FramePrincipal extends JFrame implements FramePrincipalObserver {
     }
 
     @Override
-    public void notificarNumeroDeCarro(int numCarro) {
+    public void notificarQtdCarros(int numCarro) {
         lbNumCarrosSimulacao.setText("" + numCarro);
     }
 
@@ -213,7 +213,7 @@ public class FramePrincipal extends JFrame implements FramePrincipalObserver {
     }
 
     @Override
-    public void notificarSimulacaoFinalizada() {
+    public void notificarFinalizacao() {
         btnCarregarNovaMatriz.setEnabled(true);
         btnStart.setEnabled(true);
         jsNumCarro.setEnabled(true);
@@ -235,7 +235,7 @@ public class FramePrincipal extends JFrame implements FramePrincipalObserver {
     }
 
     private void btnCarregarNovaMatrizListeners() {
-        EventQueue.invokeLater(() -> new FrameConfig(this).setVisible(true));
+        EventQueue.invokeLater(() -> new Configuracoes(this).setVisible(true));
     }
 
 }

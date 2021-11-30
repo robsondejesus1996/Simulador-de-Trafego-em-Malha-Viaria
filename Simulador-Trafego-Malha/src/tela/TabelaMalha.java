@@ -24,7 +24,7 @@ public class TabelaMalha extends JTable implements ObservadorTabela {
     private JPanel parentPanel;
     private BufferedImage[][] orginalMalhaImages;
     private BufferedImage[][] canvas;
-    private Map<Long, CarroSprite> sprites;
+    private Map<Long, CarroMalha> sprites;
 
     public TabelaMalha(JPanel parent) {
         this.controller = Controle.getInstance().obterControleMalha();
@@ -118,20 +118,20 @@ public class TabelaMalha extends JTable implements ObservadorTabela {
     }
 
     @Override
-    public void createCarro(long id, int color, int column, int row) {
-        CarroSprite newCarro = new CarroSprite(color, column, row);
+    public void inserirCarro(long id, int color, int column, int row) {
+        CarroMalha newCarro = new CarroMalha(color, column, row);
         this.sprites.put(id, newCarro);
     }
 
     @Override
-    public void moveCarro(long id, int colunm, int row) {
-        CarroSprite carro = this.sprites.get(id);
-        carro.setColumn(colunm);
-        carro.setRow(row);
+    public void movimentarCarro(long id, int colunm, int row) {
+        CarroMalha carro = this.sprites.get(id);
+        carro.definirColuna(colunm);
+        carro.definirLinha(row);
     }
 
     @Override
-    public void removeCarro(long id) {
+    public void excluirCarro(long id) {
         this.sprites.remove(id);
     }
 
@@ -151,10 +151,10 @@ public class TabelaMalha extends JTable implements ObservadorTabela {
             }
         }
 
-        List<CarroSprite> sprintesSeguret = new ArrayList<>(this.sprites.values());
+        List<CarroMalha> sprintesSeguret = new ArrayList<>(this.sprites.values());
         sprintesSeguret.forEach((sprite) -> {
-            if (sprite.getColumn() != -1 && sprite.getRow() != -1) {
-                Graphics2D g = this.canvas[sprite.getColumn()][sprite.getRow()].createGraphics();
+            if (sprite.obterColuna() != -1 && sprite.obterLinha() != -1) {
+                Graphics2D g = this.canvas[sprite.obterColuna()][sprite.obterLinha()].createGraphics();
                 sprite.draw(g);
                 g.dispose();
             }

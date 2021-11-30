@@ -1,6 +1,6 @@
 package tela;
 
-import tela.FrameConfig;
+import tela.Configuracoes;
 import java.awt.EventQueue;
 
 /**
@@ -11,7 +11,7 @@ public class PrincipalSimulador {
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
-            new FrameConfig().setVisible(true);
+            new Configuracoes().setVisible(true);
         });
     }
 }

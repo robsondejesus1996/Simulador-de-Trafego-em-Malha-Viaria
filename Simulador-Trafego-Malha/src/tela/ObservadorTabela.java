@@ -6,9 +6,9 @@ package tela;
  */
 public interface ObservadorTabela {
 
-    void createCarro(long id, int color, int column, int row);
+    void inserirCarro(long id, int color, int column, int row);
 
-    void moveCarro(long id, int colunm, int row);
+    void movimentarCarro(long id, int colunm, int row);
 
-    void removeCarro(long id);
+    void excluirCarro(long id);
 }
