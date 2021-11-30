@@ -198,5 +198,4 @@ public class TabelaMalha extends JTable implements ObservadorTabela {
         }
     }
 
-
 }

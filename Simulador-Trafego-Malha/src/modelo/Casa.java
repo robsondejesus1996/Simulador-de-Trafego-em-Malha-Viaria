@@ -41,14 +41,6 @@ public abstract class Casa implements InterfaceCasa {
         }
     }
 
-    private Random getRandom() {
-        if (random == null) {
-            random = new Random();
-        }
-
-        return random;
-    }
-
     @Override
     public int obterValor() {
         return valor;
@@ -71,8 +63,9 @@ public abstract class Casa implements InterfaceCasa {
 
     @Override
     public void definirCarro(InterfaceCarro carro) {
-        if (carro != null)
+        if (carro != null) {
             Controle.getInstance().obterControleMalha().movimentarCarro(carro.getId(), coluna, linha);
+        }
         this.carro = carro;
     }
 
@@ -112,4 +105,13 @@ public abstract class Casa implements InterfaceCasa {
     public String toString() {
         return "Casa{" + "coluna=" + coluna + ", linha=" + linha + ", valor=" + valor + '}';
     }
+
+    private Random getRandom() {
+        if (random == null) {
+            random = new Random();
+        }
+
+        return random;
+    }
+
 }

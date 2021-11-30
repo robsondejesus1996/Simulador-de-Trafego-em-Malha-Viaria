@@ -1,4 +1,5 @@
 package tela;
+
 import utilizacao.MapaImagens;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -7,7 +8,6 @@ import java.awt.image.BufferedImage;
  *
  * @author Robson de Jesus
  */
-
 public class CarroMalha {
 
     private int coluna;
@@ -29,7 +29,8 @@ public class CarroMalha {
     }
 
     public int obterColuna() {
-        return coluna; }
+        return coluna;
+    }
 
     public int obterLinha() {
         return linha;

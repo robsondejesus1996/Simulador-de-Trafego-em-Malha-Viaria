@@ -11,23 +11,20 @@ import java.util.Random;
 import modelo.InterfaceCasa;
 import factoryAbs.FabricaAbstrata;
 import tela.ObservadorTabela;
+
 /**
  *
  * @author Robson de Jesus
  */
 public class ControleArquivoMalha {
-    
-    //saida controle -- system controller
 
+    //saida controle -- system controller
     private int[][] malhaMatriz;
     private int qtdCasasValidas;
     private InterfaceCasa[][] malhaMatrizCasa;
-
-    private List<InterfaceCasa> reaparecimentoCasa; 
+    private List<InterfaceCasa> reaparecimentoCasa;
     private List<InterfaceCasa> MorteCasas;
-
     private List<ObservadorTabela> observadores;
-
     private final Random aleatorioRandom;
 
     public ControleArquivoMalha(int[][] matrix) {
@@ -199,7 +196,8 @@ public class ControleArquivoMalha {
                                     origem.adicionarCaminho(new MovimentacaoUmaCasa(origem, destino));
                                 }
                             }
-                            default -> origem.adicionarCaminho(new DesativarCarro(origem));
+                            default ->
+                                origem.adicionarCaminho(new DesativarCarro(origem));
                         }
                     }
                 }

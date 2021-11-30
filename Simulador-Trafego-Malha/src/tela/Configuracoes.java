@@ -15,7 +15,6 @@ import java.util.logging.Logger;
 public class Configuracoes extends JFrame {
 
     private String caminho;
-
     private Dimension tamanho;
     private JLabel labelArquivo;
     private JLabel labelAreaCritica;
@@ -193,6 +192,5 @@ public class Configuracoes extends JFrame {
         }
         this.dispose();
     }
-
 
 }

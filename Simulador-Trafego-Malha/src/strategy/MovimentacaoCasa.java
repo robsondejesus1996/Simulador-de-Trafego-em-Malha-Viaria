@@ -29,6 +29,13 @@ public class MovimentacaoCasa implements Movimentacao {
         this.aleatorio = new Random();
     }
 
+    private boolean liberarRecursos(int i) {
+        for (int j = (i - 1); j >= 0; j--) {
+            movimentacaoCaminho.get(j).liberarRecurso();
+        }
+        return false;
+    }
+
     @Override
     public void run() {
         InterfaceCarro carro = casaOrigem.obterCarro();
@@ -91,13 +98,6 @@ public class MovimentacaoCasa implements Movimentacao {
                 carro.sleep(velocidade);
             }
         }
-    }
-
-    private boolean liberarRecursos(int i) {
-        for (int j = (i - 1); j >= 0; j--) {
-            movimentacaoCaminho.get(j).liberarRecurso();
-        }
-        return false;
     }
 
 }

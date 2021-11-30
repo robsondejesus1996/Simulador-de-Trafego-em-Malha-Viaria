@@ -41,6 +41,18 @@ public class Principal extends JFrame implements FramePrincipalObserver {
     private GridBagConstraints cons;
     private TabelaMalha tabela;
 
+    @Override
+    public void notificarQtdCarros(int numCarro) {
+        labelQtdAtualSimulacaoCarros.setText("" + numCarro);
+    }
+
+    @Override
+    public void notificarFinalizacao() {
+        botaoNovaMalha.setEnabled(true);
+        botaoIniciar.setEnabled(true);
+        qtdCarros.setEnabled(true);
+    }
+
     public Principal() {
         controle = Controle.getInstance();
         inicializarPropriedades();
@@ -181,11 +193,6 @@ public class Principal extends JFrame implements FramePrincipalObserver {
         c.setPreferredSize(d);
     }
 
-    @Override
-    public void notificarQtdCarros(int numCarro) {
-        labelQtdAtualSimulacaoCarros.setText("" + numCarro);
-    }
-
     private void inicializarListeners() {
         this.botaoIniciar.addActionListener((e) -> botaoIniciarListeners());
         this.botaoPara.addActionListener((e) -> botaopararListeners());
@@ -210,13 +217,6 @@ public class Principal extends JFrame implements FramePrincipalObserver {
         painelTabela.add(pane);
         painelTabela.repaint();
         painelTabela.revalidate();
-    }
-
-    @Override
-    public void notificarFinalizacao() {
-        botaoNovaMalha.setEnabled(true);
-        botaoIniciar.setEnabled(true);
-        qtdCarros.setEnabled(true);
     }
 
     private void botaopararListeners() {

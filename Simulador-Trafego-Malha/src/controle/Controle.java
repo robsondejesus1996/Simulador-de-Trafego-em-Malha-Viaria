@@ -34,6 +34,13 @@ public class Controle {
     private List<FramePrincipalObserver> observadoresTela;
     private List<ObservadorTabela> tabelaObservadoresMalha;
 
+    public static synchronized Controle getInstance() {
+        if (singleton == null) {
+            singleton = new Controle();
+        }
+        return singleton;
+    }
+
     private Controle() {
         this.qtdCarrosMalha = new HashMap<>();
         this.qtdCarrosEsperando = new HashMap<>();
@@ -41,13 +48,6 @@ public class Controle {
         this.tabelaObservadoresMalha = new ArrayList<>();
         this.ativadaSimulacao = false;
 
-    }
-
-    public static synchronized Controle getInstance() {
-        if (singleton == null) {
-            singleton = new Controle();
-        }
-        return singleton;
     }
 
     /**

@@ -41,12 +41,18 @@ public class MapaImagens {
 
     public static BufferedImage obterImagem(int in) {
         return switch (in) {
-            case 0 -> getImagem(ZERO);
-            case 1 -> getImagem(CIMA);
-            case 2 -> getImagem(DIREITA);
-            case 3 -> getImagem(BAIXO);
-            case 4 -> getImagem(ESQUERDA);
-            default -> getImagem(OUTROS);
+            case 0 ->
+                getImagem(ZERO);
+            case 1 ->
+                getImagem(CIMA);
+            case 2 ->
+                getImagem(DIREITA);
+            case 3 ->
+                getImagem(BAIXO);
+            case 4 ->
+                getImagem(ESQUERDA);
+            default ->
+                getImagem(OUTROS);
         };
     }
 
@@ -67,7 +73,7 @@ public class MapaImagens {
         BufferedImage newImage = new BufferedImage(width, height, image.getType());
         int color;
         int target = Color.black.getRGB();
-        
+
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 color = image.getRGB(i, j);
@@ -88,7 +94,6 @@ public class MapaImagens {
         int b = obterAleatorio().nextInt(256);
         return new Color(r, g, b);
     }
-
 
     private synchronized static Random obterAleatorio() {
         if (aleatorio == null) {

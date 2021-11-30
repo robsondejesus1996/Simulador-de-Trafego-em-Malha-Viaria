@@ -1,6 +1,5 @@
 package modelo;
 
-
 import strategy.Movimentacao;
 
 /**

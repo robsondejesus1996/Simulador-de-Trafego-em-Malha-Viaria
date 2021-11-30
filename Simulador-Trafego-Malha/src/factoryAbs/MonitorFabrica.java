@@ -7,13 +7,12 @@ import modelo.InterfaceCasa;
  *
  * @author Robson de Jesus
  */
-public class MonitorFabrica implements FabricaAbstrata{
-
+public class MonitorFabrica implements FabricaAbstrata {
 
     @Override
     public InterfaceCasa construirCasa(int valor, int column, int row) {
 
-        return new MonitoresCasas(valor,column,row);
+        return new MonitoresCasas(valor, column, row);
     }
 
 }

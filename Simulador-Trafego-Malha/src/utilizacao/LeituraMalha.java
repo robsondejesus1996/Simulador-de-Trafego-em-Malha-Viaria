@@ -20,27 +20,27 @@ public class LeituraMalha {
 
     public int[][] obterMatriz() throws Exception {
         if (malhaMatriz == null) {
-            throw new Exception("Matrix não Intaciada");
+            throw new Exception("ERRO NA INICIALIZAÇÃO DA MATRIZ");
         }
         return malhaMatriz;
     }
 
     private void leituraArquivo() throws FileNotFoundException, Exception {
-        Scanner scanner = new Scanner(new File(arquivoCaminho));
+        Scanner entrada = new Scanner(new File(arquivoCaminho));
 
         try {
-            int linha = Integer.parseInt(scanner.nextLine());
-            int coluna = Integer.parseInt(scanner.nextLine());
+            int linha = Integer.parseInt(entrada.nextLine());
+            int coluna = Integer.parseInt(entrada.nextLine());
             malhaMatriz = new int[coluna][linha];
         } catch (Exception e) {
             e.printStackTrace();
-            throw new Exception("Problema na leitura do arquivo, possivel problema no formato. ");
+            throw new Exception("ERRO PROBLEMA NA LEITURA DO ARQUIVO, POSSÍVEL PROBLEMA NO FORMATO.");
         }
 
         int linhaIndex = 0;
 
-        while (scanner.hasNext()) {
-            String l = scanner.nextLine();
+        while (entrada.hasNext()) {
+            String l = entrada.nextLine();
             String[] lv = l.split("	");
 
             for (int i = 0; i < lv.length; i++) {
@@ -49,7 +49,7 @@ public class LeituraMalha {
             linhaIndex++;
         }
 
-        scanner.close();
+        entrada.close();
     }
 
 }
