@@ -164,6 +164,7 @@ public class Configuracoes extends JFrame {
     }
 
     private void botaoCancelarListeners() {
+        System.exit(0);
     }
 
     private void botaoCriarListeners() {
