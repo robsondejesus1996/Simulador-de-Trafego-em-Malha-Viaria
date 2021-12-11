@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.InterfaceCarro;
 import factoryAbs.FabricaAbstrata;
+import modelo.InterfaceCasa;
 import tela.ObservadorTabela;
 
 /**
@@ -152,4 +153,12 @@ public class Controle {
     public void stopReaparecimento() {
         ativadaSimulacao = false;
     }
+    
+    //teste encerrar 
+    
+    public void encerrarSimulacao(){
+        System.exit(0);
+    }
+    
+    
 }

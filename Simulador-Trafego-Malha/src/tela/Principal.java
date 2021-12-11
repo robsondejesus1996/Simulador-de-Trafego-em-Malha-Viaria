@@ -31,6 +31,9 @@ public class Principal extends JFrame implements FramePrincipalObserver {
     private JPanel painelConfiguracao;
     private JPanel painelTabela;
     private JButton botaoPara;
+    
+    //teste encerrar 
+    private JButton botaoEncerrar;
     private JButton botaoIniciar;
 
     private JButton botaoNovaMalha;
@@ -118,7 +121,8 @@ public class Principal extends JFrame implements FramePrincipalObserver {
         cons.gridwidth = 3;
         cons.fill = GridBagConstraints.HORIZONTAL;
         jPConfingII.add(jpConfingIII, cons);
-
+        
+        this.botaoEncerrar = new JButton("Encerrar");
         this.botaoPara = new JButton("Aguardar e Encerrar");
         this.botaoIniciar = new JButton("Iniciar");
         this.qtdCarros = new JSpinner();
@@ -158,6 +162,15 @@ public class Principal extends JFrame implements FramePrincipalObserver {
         cons.insets = insets;
         this.botaoPara.setEnabled(false);
         jpConfingIII.add(this.botaoPara, cons);
+        
+        cons = new GridBagConstraints();
+        cons.gridx = 1;
+        cons.gridy = 2;
+        cons.ipadx = 25;
+        cons.fill = GridBagConstraints.HORIZONTAL;
+        cons.insets = insets;
+        this.botaoEncerrar.setEnabled(false);
+        jpConfingIII.add(this.botaoEncerrar, cons);
 
         cons = new GridBagConstraints();
         cons.gridx = 0;
@@ -196,6 +209,7 @@ public class Principal extends JFrame implements FramePrincipalObserver {
     private void inicializarListeners() {
         this.botaoIniciar.addActionListener((e) -> botaoIniciarListeners());
         this.botaoPara.addActionListener((e) -> botaopararListeners());
+        this.botaoEncerrar.addActionListener((e) -> botaoEncerrarListeners());
         this.botaoNovaMalha.addActionListener((e) -> botaoNovaMalhaListeners());
     }
 
@@ -223,11 +237,17 @@ public class Principal extends JFrame implements FramePrincipalObserver {
         botaoPara.setEnabled(false);
         controle.stopReaparecimento();
     }
+    
+    private void botaoEncerrarListeners(){
+        botaoEncerrar.setEnabled(false);
+        controle.encerrarSimulacao();
+    }
 
     private void botaoIniciarListeners() {
         qtdCarros.setEnabled(false);
         botaoIniciar.setEnabled(false);
         botaoPara.setEnabled(true);
+        botaoEncerrar.setEnabled(true);
         botaoNovaMalha.setEnabled(false);
 
         int numeroCarro = (int) qtdCarros.getValue();
