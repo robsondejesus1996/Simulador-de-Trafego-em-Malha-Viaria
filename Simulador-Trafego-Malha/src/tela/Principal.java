@@ -235,6 +235,7 @@ public class Principal extends JFrame implements FramePrincipalObserver {
 
     private void botaopararListeners() {
         botaoPara.setEnabled(false);
+        botaoEncerrar.setEnabled(false);
         controle.stopReaparecimento();
     }
     
