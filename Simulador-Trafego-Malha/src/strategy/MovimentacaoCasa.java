@@ -12,14 +12,9 @@ import modelo.InterfaceCasa;
  */
 public class MovimentacaoCasa implements Movimentacao {
 
-    //Começo de Tudo
     private final InterfaceCasa casaOrigem;
-    //Fim de Tudo
     private final InterfaceCasa casaDestino;
-
-    //Armazena todos o caminho INCLUSIVEL O destino
     private final List<InterfaceCasa> movimentacaoCaminho;
-    //random
     private final Random aleatorio;
 
     public MovimentacaoCasa(InterfaceCasa origem, InterfaceCasa destino, List<InterfaceCasa> caminho) {
@@ -44,7 +39,6 @@ public class MovimentacaoCasa implements Movimentacao {
         boolean liberado;
         do {
             liberado = true;
-            //Vai tentar pegar o recurso de todas!!
             if (casaDestino.alocacaoCasa()) {
 
                 for (int i = 0; i < movimentacaoCaminho.size() - 1; i++) {
@@ -84,11 +78,9 @@ public class MovimentacaoCasa implements Movimentacao {
             carro.sleep(velocidade);
 
             for (int i = 0; i < movimentacaoCaminho.size() - 1; i++) {
-                //saindo da casa
                 InterfaceCasa casaAtual = movimentacaoCaminho.get(i);
                 casaAtual.excluirCarro();
 
-                //entrando na casa
                 InterfaceCasa novaCasa = movimentacaoCaminho.get(i + 1);
                 novaCasa.definirCarro(carro);
                 carro.definirCasa(novaCasa);

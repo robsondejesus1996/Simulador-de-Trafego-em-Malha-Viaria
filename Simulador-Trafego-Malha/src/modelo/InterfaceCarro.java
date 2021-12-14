@@ -15,7 +15,7 @@ public interface InterfaceCarro {
     @Override
     boolean equals(Object obj);
 
-    int getCores(); // rgbd
+    int getCores(); 
 
     void buscarCaminho();
 

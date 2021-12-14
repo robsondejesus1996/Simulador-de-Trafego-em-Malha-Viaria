@@ -31,11 +31,8 @@ public class Principal extends JFrame implements FramePrincipalObserver {
     private JPanel painelConfiguracao;
     private JPanel painelTabela;
     private JButton botaoPara;
-    
-    //teste encerrar 
     private JButton botaoEncerrar;
     private JButton botaoIniciar;
-
     private JButton botaoNovaMalha;
     private JSpinner qtdCarros;
     private JLabel labelLimiteQtdCarros;

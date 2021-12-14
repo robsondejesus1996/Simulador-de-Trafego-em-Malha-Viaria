@@ -35,7 +35,6 @@ public class MonitoresCasas extends Casa {
         bloquear.unlock();
     }
 
-    //Necessita do Lock
     @Override
     public boolean alocacaoCasa() {
         try {

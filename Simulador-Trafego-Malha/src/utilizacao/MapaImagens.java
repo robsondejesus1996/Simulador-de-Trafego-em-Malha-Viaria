@@ -19,13 +19,13 @@ public class MapaImagens {
 
     private static Map<String, BufferedImage> imagems = new HashMap<>();
     //Geral
-    public static final String ZERO = "img/branca_fundo.png"; // verde
-    public static final String CIMA = "img/cima.png"; // cima
-    public static final String BAIXO = "img/baixo.png"; // baixo
-    public static final String ESQUERDA = "img/esquerda.png"; // esquerda
-    public static final String DIREITA = "img/direita.png"; //direita
-    public static final String OUTROS = "img/cruzamento.png";//cruzamento
-    public static final String CARRO = "img/carro.png";//carro
+    public static final String ZERO = "img/branca_fundo.png";
+    public static final String CIMA = "img/cima.png";
+    public static final String BAIXO = "img/baixo.png"; 
+    public static final String ESQUERDA = "img/esquerda.png"; 
+    public static final String DIREITA = "img/direita.png"; 
+    public static final String OUTROS = "img/cruzamento.png";
+    public static final String CARRO = "img/carro.png";
 
     private static Random aleatorio;
 

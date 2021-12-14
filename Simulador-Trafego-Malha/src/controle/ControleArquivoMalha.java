@@ -18,7 +18,6 @@ import tela.ObservadorTabela;
  */
 public class ControleArquivoMalha {
 
-    //saida controle -- system controller
     private int[][] malhaMatriz;
     private int qtdCasasValidas;
     private InterfaceCasa[][] malhaMatrizCasa;
@@ -77,7 +76,6 @@ public class ControleArquivoMalha {
         reaparecimentoCasa.clear();
         for (int linha = 0; linha < pegarTamanhoLinha(); linha++) {
             for (int coluna = 0; coluna < pegarTamanhoColuna(); coluna++) {
-                //Se houver valor na casa significa que a mesma faz parte da malha
                 if (malhaMatrizCasa[coluna][linha].obterValor() != 0) {
                     int lado = 0;
                     int valorCasa = malhaMatrizCasa[coluna][linha].obterValor();
@@ -91,17 +89,14 @@ public class ControleArquivoMalha {
                     } else if (linha == pegarTamanhoLinha() - 1) {
                         lado = 4;
                     }
-                    //lado == 1 - Primeira Coluna
                     switch (lado) {
                         case 1:
                             switch (valorCasa) {
                                 case 2:
                                     this.reaparecimentoCasa.add(malhaMatrizCasa[coluna][linha]);
-                                    //add casasRespawn
                                     break;
                                 case 4:
                                     this.MorteCasas.add(malhaMatrizCasa[coluna][linha]);
-                                    //add casasDeath
                                     break;
                             }
                             break;
@@ -109,11 +104,9 @@ public class ControleArquivoMalha {
                             switch (valorCasa) {
                                 case 1:
                                     this.MorteCasas.add(malhaMatrizCasa[coluna][linha]);
-                                    //add casasDeath
                                     break;
                                 case 3:
                                     this.reaparecimentoCasa.add(malhaMatrizCasa[coluna][linha]);
-                                    //add casasRespawn
                                     break;
                             }
                             break;
@@ -121,11 +114,9 @@ public class ControleArquivoMalha {
                             switch (valorCasa) {
                                 case 2:
                                     this.MorteCasas.add(malhaMatrizCasa[coluna][linha]);
-                                    //add casasDeath
                                     break;
                                 case 4:
                                     this.reaparecimentoCasa.add(malhaMatrizCasa[coluna][linha]);
-                                    //add casasRespawn
                                     break;
                             }
                             break;
@@ -133,11 +124,9 @@ public class ControleArquivoMalha {
                             switch (valorCasa) {
                                 case 1:
                                     this.reaparecimentoCasa.add(malhaMatrizCasa[coluna][linha]);
-                                    //add casasRespawn
                                     break;
                                 case 3:
                                     this.MorteCasas.add(malhaMatrizCasa[coluna][linha]);
-                                    //add casasDeath
                                     break;
                             }
                             break;
@@ -150,15 +139,11 @@ public class ControleArquivoMalha {
     }
 
     public void definirComandos() {
-        //Adicionar os commands dentro da casa
-        //Add Pontos de Morte
         for (InterfaceCasa iCasa : MorteCasas) {
             iCasa.adicionarCaminho(new DesativarCarro(iCasa));
         }
-        //Agora percorre a estrutura para encontrar as possíveis rotas de cada casa
         for (int linha = 0; linha < pegarTamanhoLinha(); linha++) {
             for (int coluna = 0; coluna < pegarTamanhoColuna(); coluna++) {
-                //Se houver valor na casa significa que a mesma faz parte da malha
                 if (malhaMatrizCasa[coluna][linha].obterValor() != 0) {
                     InterfaceCasa destino;
                     InterfaceCasa origem = malhaMatrizCasa[coluna][linha];
@@ -237,22 +222,6 @@ public class ControleArquivoMalha {
         InterfaceCasa Movimento1;
         InterfaceCasa Movimento2;
         InterfaceCasa Movimento3;
-        //Captura os possíveis movimentos
-        //Entrada 1
-        //Entrada 2
-        //Entrada 3
-        //Captura os possíveis movimentos
-        //Entrada 1
-        //Entrada 2
-        //Entrada 3
-        //Captura os possíveis movimentos
-        //Entrada 1
-        //Entrada 2
-        //Entrada 3
-        //Captura os possíveis movimentos
-        //Entrada 1
-        //Entrada 2
-        //Entrada 3
         switch (origem.obterValor()) {
             case 1 -> {
                 Movimento1 = malhaMatrizCasa[origem.obterColuna()][origem.obterLinha() - 1];

@@ -35,9 +35,7 @@ public class TabelaMalha extends JTable implements ObservadorTabela {
         iniciarBuffert();
 
         new Thread(() -> {
-            // Game Loop: Nystrom, 2014
-
-            long MS_PER_FRAME = 16; //  16 ms/frame = 60 FPS
+            long MS_PER_FRAME = 16; 
             long last = System.currentTimeMillis();
             while (true) {
 
@@ -66,9 +64,6 @@ public class TabelaMalha extends JTable implements ObservadorTabela {
         this.revalidate();
     }
 
-    /**
-     * Inicializa as propriedades da tabela.
-     */
     private void inicializacaoPropriedades() {
         this.setModel(new ManhaTableModel());
         this.setDefaultRenderer(Object.class, new BoardTableRenderer());

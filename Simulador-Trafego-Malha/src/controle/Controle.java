@@ -51,9 +51,6 @@ public class Controle {
 
     }
 
-    /**
-     * Ler Arquivo onde contem a matriz
-     */
     public void carregarArquivo(String text) throws FileNotFoundException, Exception {
         LeituraMalha ler = new LeituraMalha(text);
         controleMalha = new ControleArquivoMalha(ler.obterMatriz());
@@ -75,9 +72,6 @@ public class Controle {
         this.fact = factory.equals("Monitor") ? new MonitorFabrica() : new SemaforoFabrica();
     }
 
-    /**
-     * Rebute Malha
-     */
     public void redefinirMalhaObservadores() {
         this.controleMalha.removerObservadores();
     }
@@ -122,7 +116,6 @@ public class Controle {
         this.tabelaObservadoresMalha.add(observer);
     }
 
-    //Runneable
     private void addAutomatico() {
         while (ativadaSimulacao) {
             for (int i = (qtdCarrosEsperando.size() + qtdCarrosMalha.size()); i < qtdCarros; i++) {
@@ -153,8 +146,6 @@ public class Controle {
     public void stopReaparecimento() {
         ativadaSimulacao = false;
     }
-    
-    //teste encerrar 
     
     public void encerrarSimulacao(){
         System.exit(0);

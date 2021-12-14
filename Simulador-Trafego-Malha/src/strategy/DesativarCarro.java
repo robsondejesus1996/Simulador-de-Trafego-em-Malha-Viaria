@@ -10,9 +10,6 @@ import modelo.InterfaceCasa;
  */
 public class DesativarCarro implements Movimentacao {
 
-    /**
-     * Matar o carro
-     */
     private final InterfaceCasa casaOrigem;
 
     public DesativarCarro(InterfaceCasa origem) {
